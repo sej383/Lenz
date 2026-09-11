@@ -1,0 +1,75 @@
+---
+import LegalPage from "../../layouts/LegalPage.astro";
+import { siteConfig } from "../../lib/site-config";
+---
+
+<LegalPage
+  title="Terms of Use — LENZ"
+  description="Terms governing use of the LENZ website."
+  eyebrow="Legal"
+  heading="Terms of Use"
+  updated="September 11, 2026"
+>
+  <p>
+    These terms cover use of this website (<strong>lenzphotos.com</strong>) only. They are not a
+    photography or video services contract — the terms of an actual shoot, delivery, licensing, and
+    usage rights for a specific project are agreed separately between LENZ and the client.
+  </p>
+
+  <h2>Site content and ownership</h2>
+  <p>
+    All photography, video, text, and design on this site belong to LENZ (or are used with the
+    rights holder's permission) and are protected by copyright. You may view and share pages of
+    this site for personal, non-commercial reference. You may not download, reproduce, republish,
+    or otherwise use LENZ's photography or video from this site for any commercial purpose without
+    written permission.
+  </p>
+
+  <h2>Using this site</h2>
+  <p>You agree not to:</p>
+  <ul>
+    <li>Use this site for any unlawful purpose</li>
+    <li>Attempt to gain unauthorized access to any part of the site or its underlying systems</li>
+    <li>Submit false, misleading, or spam content through the contact form</li>
+    <li>Interfere with the site's normal operation (for example, through automated scraping or denial-of-service activity)</li>
+  </ul>
+
+  <h2>External links</h2>
+  <p>
+    This site links to third-party services LENZ doesn't control — including the HDPhotoHub real
+    estate booking system and LENZ's social media profiles. LENZ isn't responsible for the content,
+    availability, or privacy practices of those external sites.
+  </p>
+
+  <h2>No warranty</h2>
+  <p>
+    This site and its content are provided "as is." LENZ makes reasonable efforts to keep
+    information accurate and the site available, but doesn't guarantee the site will be
+    uninterrupted, error-free, or that all content is fully up to date.
+  </p>
+
+  <h2>Limitation of liability</h2>
+  <p>
+    To the extent permitted by law, LENZ isn't liable for indirect, incidental, or consequential
+    damages arising from your use of this site.
+  </p>
+
+  <h2>Governing law</h2>
+  <p>These terms are governed by the laws of the State of Iowa, without regard to conflict-of-law principles.</p>
+  <span class="legal-todo">
+    This clause reflects Iowa as LENZ's working jurisdiction (where the business is based) and is
+    not a substitute for legal advice. Recommend attorney review of this clause before this page is
+    treated as final.
+  </span>
+
+  <h2>Changes to these terms</h2>
+  <p>
+    LENZ may update these terms from time to time. The "Last updated" date at the top of this page
+    reflects the most recent revision.
+  </p>
+
+  <h2>Contact</h2>
+  <p>
+    Questions about these terms: <a href={`mailto:${siteConfig.contact.email}`}>{siteConfig.contact.email}</a>.
+  </p>
+</LegalPage>

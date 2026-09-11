@@ -91,6 +91,59 @@ Old site: `throughthelenzphoto.com` (aliased from `www.lenzphotos.com`), built o
 
 **On the Portfolio route specifically:** the visible navigation already reads "Portfolio," but the underlying route is still `/work/` (per your explicit instruction not to auto-rename it). Recommendation, not a decision: **keep `/work/` as the canonical URL.** It's not indexed under any old URL that used the word "portfolio," so there's no existing SEO equity tied to that specific word — renaming now would only create a redirect to manage for no migration benefit. If you'd rather the URL matched the nav label for its own sake (not for migration reasons), that's a valid but separate call; I'd only make that change on your explicit go-ahead.
 
+### 4.1 Preserving the legacy `throughthelenzphoto.com` domain (not yet implemented — procedure only)
+
+`throughthelenzphoto.com` and `www.throughthelenzphoto.com` (the domain this whole audit's crawl was done against — separate from `lenzphotos.com`/`www.lenzphotos.com`, which becomes this new site's canonical production domain) should **stay registered and keep working**, but purely as a redirect layer — never as a second live copy of the site. Two requirements, in priority order:
+
+1. **Old URLs with a specific mapping above** (`/about`, `/contact`, `/blog`, the three `/post/...` posts, `/real-estate-portfolio`, `/drone-photography`, `/branding-photography`, `/photo-albums`, `/real-estate-photo-services`, `/real-estate-photo-checklist`, `/book-now`) redirect **straight to their mapped destination on `https://www.lenzphotos.com`** — not to the old domain's homepage first, not to the new homepage first.
+2. **Everything else** (the homepage itself, and any path with no mapping above — including the three intentionally-retired Wix system pages and the unopened PDF) falls back to `https://www.lenzphotos.com/`.
+
+**Why this needs a separate, minimal Netlify site rather than reusing this repo's `public/_redirects`:** that file's rules use *relative* destinations (`/about` → `/about/`), which is correct for `www.lenzphotos.com`'s own internal Wix-era paths — but if the same rules ran on `throughthelenzphoto.com`, a relative redirect keeps the visitor on `throughthelenzphoto.com` (just at a different path on that domain), which would mean serving this same site's content under the old domain — exactly the "second duplicate copy" this must avoid. Netlify's own multi-domain "primary domain" feature has the opposite problem: it does redirect to the primary domain automatically, but preserves the path unchanged, so `throughthelenzphoto.com/post/xyz` would become `www.lenzphotos.com/post/xyz` — a path that 404s on the new site instead of landing on `/blog/xyz/`. Neither built-in mechanism does both the domain swap *and* the path remap in one step, and Netlify's `_redirects` format doesn't cleanly support "only apply this rule when the request came in on host X" — so the reliable, standard fix is a second, content-free Netlify site whose only job is redirecting, with absolute destination URLs baked into its own `_redirects` file.
+
+**Procedure, to run when the domain switch actually happens (not now):**
+
+1. Create a new, minimal Netlify site (a folder with nothing but an `_redirects` file is a valid Netlify deploy — no build step, no framework needed). A local folder called `lenz-legacy-domain-redirect` with just the file below works; a throwaway one-file Git repo is fine too.
+2. Deploy that folder to Netlify as its own site.
+3. In that site's **Domain management**, add `throughthelenzphoto.com` and `www.throughthelenzphoto.com` as custom domains (this is the point where DNS for the old domain gets repointed — the only DNS step this whole item requires).
+4. Use this exact `_redirects` file content in that new site (specific mappings first, homepage and wildcard catch-all last — Netlify matches top to bottom, first match wins):
+
+   ```
+   # throughthelenzphoto.com / www.throughthelenzphoto.com — redirect-only site.
+   # Every rule below is a permanent (301) redirect to the new canonical
+   # LENZ domain. Mirrors the mapping table in FULL-SITE-AUDIT.md section 4;
+   # keep the two in sync if that table ever changes.
+
+   /about                          https://www.lenzphotos.com/about/                                                              301
+   /contact                        https://www.lenzphotos.com/contact/                                                             301
+   /blog                           https://www.lenzphotos.com/blog/                                                                301
+
+   /post/commercial-photography-that-elevates-your-brand                                  https://www.lenzphotos.com/blog/commercial-photography-that-elevates-your-brand/                                  301
+   /post/the-power-of-drone-photography-from-real-estate-to-everyday-moments              https://www.lenzphotos.com/blog/the-power-of-drone-photography-from-real-estate-to-everyday-moments/              301
+   /post/why-professional-branding-photos-matter-for-your-business                        https://www.lenzphotos.com/blog/why-professional-branding-photos-matter-for-your-business/                        301
+
+   /real-estate-portfolio          https://www.lenzphotos.com/services/real-estate/                                               301
+   /drone-photography              https://www.lenzphotos.com/services/aerial/                                                    301
+   /branding-photography           https://www.lenzphotos.com/services/branding/                                                  301
+   /photo-albums                   https://www.lenzphotos.com/services/commercial/                                                301
+   /real-estate-photo-services     https://www.lenzphotos.com/services/real-estate/                                               301
+   /real-estate-photo-checklist    https://www.lenzphotos.com/services/real-estate/                                               301
+
+   # Old booking-instructions page — straight to the real HDPhotoHub ordering
+   # flow, same as every "Book Real Estate" button on the live site.
+   /book-now                       https://throughthelenzphotography.hd.pics/order                                                301
+
+   # Homepage and catch-all fallback — must stay last. Sends the old domain's
+   # own homepage, and any unmapped/unknown path, to the new site's homepage
+   # rather than a 404 on a domain that no longer has real content.
+   /                                https://www.lenzphotos.com/                                                                    301
+   /*                               https://www.lenzphotos.com/                                                                    301
+   ```
+
+5. Confirm both `throughthelenzphoto.com` and the `www` subdomain resolve to *this* redirect-only site (not to the main LENZ site) — the main site keeps `www.lenzphotos.com` (and bare `lenzphotos.com`) as its only domains.
+6. After DNS propagates, spot-check: the three migrated blog posts, `/real-estate-portfolio`, `/book-now`, the bare domain, and one deliberately-made-up path — all should land on `www.lenzphotos.com` at the correct page, never on a `throughthelenzphoto.com` URL and never on a raw 404.
+
+No DNS or domain changes have been made as part of writing this — this section is the documented procedure only, per your instruction, to execute at actual launch/domain-switch time.
+
 ---
 
 ## 5. Route-by-Route Confirmation

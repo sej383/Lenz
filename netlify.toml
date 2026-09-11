@@ -8,3 +8,24 @@
 # Legacy-URL 301 redirects live in public/_redirects (copied to dist/_redirects
 # at build time) rather than duplicated here — see that file for the full map,
 # sourced from FULL-SITE-AUDIT.md section 4.
+
+# Security headers safe to ship before the domain is live. Strict-Transport-
+# Security is deliberately NOT set here yet — see LAUNCH-COMPLIANCE-SEO-AUDIT.md
+# "Security" section for why (it must only go live after HTTPS on the final
+# production domain is confirmed working, since a long max-age HSTS header is
+# hard to safely walk back).
+#
+# CSP allows 'unsafe-inline' for script-src and style-src because Astro
+# inlines this site's small interactive scripts and every component's
+# scoped CSS directly into the page rather than external files — there's no
+# user-generated content rendered back into the page, so the realistic XSS
+# surface this would otherwise guard against is low. Tightening this later
+# means moving those scripts external (with SRI) or adding a nonce pipeline.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; media-src 'self'; connect-src 'self' https://cloudflareinsights.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"

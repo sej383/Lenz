@@ -1,0 +1,54 @@
+---
+import LegalPage from "../../layouts/LegalPage.astro";
+import { siteConfig } from "../../lib/site-config";
+---
+
+<LegalPage
+  title="Accessibility Statement — LENZ"
+  description="LENZ's accessibility statement — our approach to an accessible website, known limitations, and how to reach us about an issue."
+  eyebrow="Accessibility"
+  heading="Accessibility Statement"
+  updated="September 11, 2026"
+>
+  <p>
+    LENZ wants this website to be usable by as many people as possible, including people who use
+    a keyboard instead of a mouse, a screen reader, voice control, or other assistive technology.
+  </p>
+
+  <h2>Our approach</h2>
+  <p>
+    This site is built to align with the Web Content Accessibility Guidelines (WCAG) 2.2 at
+    Level AA. That includes things like a logical heading structure, visible keyboard-focus
+    indicators, labeled form fields with clear error messages, alt text on meaningful images,
+    sufficient color contrast, and respecting your device's reduced-motion setting.
+  </p>
+  <p>
+    We do not claim this site is certified or guaranteed to meet every WCAG success criterion at
+    all times. Accessibility is an ongoing effort, not a one-time checkbox — we review and improve
+    it as the site changes.
+  </p>
+
+  <h2>Known limitations</h2>
+  <p>
+    We're not aware of any significant barriers at this time. If a specific piece of content —
+    including an embedded video, a form, or the portfolio gallery — doesn't work well with the
+    assistive technology you use, we want to know about it (see below).
+  </p>
+
+  <h2>What we've deliberately avoided</h2>
+  <p>
+    This site does not use an accessibility "overlay" plugin (a third-party widget that claims to
+    automatically fix accessibility issues) and does not block right-click, text selection, or
+    other normal browser behavior. Accessibility here is built into the site's actual markup and
+    styling, not bolted on afterward.
+  </p>
+
+  <h2>Feedback</h2>
+  <p>
+    If you run into an accessibility barrier anywhere on this site, please let us know — including
+    the page you were on and what happened — and we'll do our best to address it.
+  </p>
+  <p>
+    Email: <a href={`mailto:${siteConfig.contact.email}`}>{siteConfig.contact.email}</a>
+  </p>
+</LegalPage>

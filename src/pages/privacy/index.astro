@@ -1,0 +1,87 @@
+---
+import LegalPage from "../../layouts/LegalPage.astro";
+import { siteConfig } from "../../lib/site-config";
+---
+
+<LegalPage
+  title="Privacy Policy — LENZ"
+  description="How LENZ collects, uses, and protects information submitted through this website."
+  eyebrow="Legal"
+  heading="Privacy Policy"
+  updated="September 11, 2026"
+>
+  <p>
+    This policy explains what information LENZ collects through this website
+    (<strong>lenzphotos.com</strong>), why, and how it's handled. It covers this website only — not
+    information Sarah Lenz collects separately during a photography or video project (for example,
+    on a paper contract or a booking call).
+  </p>
+
+  <h2>Information collected through the contact form</h2>
+  <p>When you submit the inquiry form on the Contact page, LENZ collects:</p>
+  <ul>
+    <li>Name</li>
+    <li>Company or business name, if provided</li>
+    <li>Email address</li>
+    <li>Phone number, if provided</li>
+    <li>Project type (Commercial, Branding, Aerial, or General Inquiry)</li>
+    <li>Project location/city, if provided</li>
+    <li>The project details you write in</li>
+  </ul>
+  <p>
+    This information is used solely to respond to your inquiry and plan a potential project. It is
+    not sold, and it is not used for advertising or marketing to you beyond replying to what you
+    submitted.
+  </p>
+  <p>
+    The form also includes a hidden field that legitimate visitors never see or fill in — it exists
+    only to catch automated spam and isn't used to collect information about you.
+  </p>
+
+  <h2>Real estate booking</h2>
+  <p>
+    "Book Real Estate" links on this site take you to LENZ's real estate ordering system, operated
+    by a third party (HDPhotoHub), on their own domain. Information you submit there is governed by
+    that provider's privacy policy, not this one.
+  </p>
+
+  <h2>Analytics</h2>
+  <p>
+    This site uses Cloudflare Web Analytics to understand overall traffic — things like total
+    visits, which pages are viewed, and general referral/location trends. It's cookieless: it
+    doesn't use tracking cookies or build an individual profile of you across visits or other
+    sites.
+  </p>
+
+  <h2>Who processes this information</h2>
+  <p>Form submissions and site analytics currently pass through:</p>
+  <ul>
+    <li><strong>Netlify</strong> — hosts this website and processes contact-form submissions.</li>
+    <li><strong>Cloudflare</strong> — provides the cookieless analytics described above.</li>
+  </ul>
+
+  <h2>Data retention</h2>
+  <p>
+    We retain inquiry information only as long as reasonably necessary to respond to your request,
+    provide services, maintain business records, and meet applicable legal or accounting
+    obligations.
+  </p>
+
+  <h2>Security</h2>
+  <p>
+    This site is served over HTTPS, so information submitted through the contact form is encrypted
+    in transit.
+  </p>
+
+  <h2>Your choices</h2>
+  <p>
+    You can decline to submit the contact form and instead reach LENZ directly by email or phone
+    (see Contact page). To request that previously submitted inquiry information be deleted, email
+    the address below.
+  </p>
+
+  <h2>Contact</h2>
+  <p>
+    Questions about this policy, or requests about your information: <a href={`mailto:${siteConfig.contact.email}`}>{siteConfig.contact.email}</a>.
+  </p>
+</LegalPage>

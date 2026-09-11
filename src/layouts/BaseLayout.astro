@@ -9,9 +9,10 @@ interface Props {
   description: string;
   image?: string;
   type?: "website" | "article";
+  noindex?: boolean;
 }
 
-const { title, description, image = "/og-image.jpg", type = "website" } = Astro.props;
+const { title, description, image = "/og-image.jpg", type = "website", noindex = false } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const socialImageURL = new URL(image, Astro.site);
@@ -27,7 +28,8 @@ const socialImageURL = new URL(image, Astro.site);
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="canonical" href={canonicalURL} />
+    {!noindex && <link rel="canonical" href={canonicalURL} />}
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
 
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -45,6 +47,16 @@ const socialImageURL = new URL(image, Astro.site);
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={socialImageURL} />
+
+    {
+      siteConfig.analytics.cloudflareBeaconToken && (
+        <script
+          defer
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon={`{"token": "${siteConfig.analytics.cloudflareBeaconToken}"}`}
+        />
+      )
+    }
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to main content</a>

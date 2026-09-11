@@ -24,6 +24,17 @@ export const siteConfig = {
     phone: "402.813.7289" as string | null,
     facebookUrl: "https://www.facebook.com/LENZPhotos" as string | null,
   },
+
+  // Cloudflare Web Analytics beacon token — cookieless, no consent banner
+  // needed, gives visitors/pageviews/top pages/referrers/country-level
+  // traffic (see PROJECT-BRIEF.md section 13). Cloudflare issues this token
+  // per-hostname, so it can't exist until the production domain is live and
+  // added under Cloudflare's Web Analytics tab. Left null on purpose — the
+  // beacon in BaseLayout.astro only renders once this is filled in, so
+  // nothing fires (and there's nothing to test) until then.
+  analytics: {
+    cloudflareBeaconToken: null as string | null,
+  },
 } as const;
 
 export type NavLink = {

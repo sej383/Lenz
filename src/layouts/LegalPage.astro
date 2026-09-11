@@ -1,0 +1,120 @@
+---
+// Shared shell for /privacy/, /terms/, /accessibility/ — same intro +
+// long-form prose treatment as a blog article's body (see
+// src/pages/blog/[slug].astro), reused here rather than duplicated three
+// times since it's a real repeated page structure, not just similar markup.
+import BaseLayout from "./BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  eyebrow: string;
+  heading: string;
+  updated: string;
+}
+
+const { title, description, eyebrow, heading, updated } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <Header />
+  <main id="main-content">
+    <div class="section section--light legal-page__intro">
+      <div class="container legal-page__head">
+        <p class="eyebrow">{eyebrow}</p>
+        <h1>{heading}</h1>
+        <p class="legal-page__updated">Last updated {updated}</p>
+      </div>
+    </div>
+
+    <div class="section section--light section--sand legal-page__body-section">
+      <div class="container legal-page__body">
+        <slot />
+      </div>
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .legal-page__intro {
+    padding-bottom: 0;
+  }
+
+  .legal-page__head h1 {
+    font-size: var(--step-3);
+    font-weight: 500;
+    margin-top: 0.35em;
+    max-width: 32ch;
+    color: var(--color-charcoal);
+  }
+
+  .legal-page__updated {
+    margin-top: var(--space-2xs);
+    font-size: var(--step--1);
+    color: var(--color-muted);
+  }
+
+  .legal-page__body {
+    max-width: 42rem;
+    margin-inline: auto;
+    color: var(--color-charcoal);
+    font-size: var(--step-0);
+    line-height: 1.7;
+  }
+
+  .legal-page__body :global(h2) {
+    font-size: var(--step-2);
+    font-weight: 500;
+    margin-top: 1.8em;
+  }
+
+  .legal-page__body :global(h2:first-child) {
+    margin-top: 0;
+  }
+
+  .legal-page__body :global(h3) {
+    font-size: var(--step-1);
+    font-weight: 600;
+    margin-top: 1.5em;
+  }
+
+  .legal-page__body :global(p) {
+    margin-top: 1em;
+  }
+
+  .legal-page__body :global(ul) {
+    margin-top: 1em;
+    padding-left: 1.4em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4em;
+  }
+
+  .legal-page__body :global(li) {
+    list-style: disc;
+  }
+
+  .legal-page__body :global(strong) {
+    font-weight: 600;
+    color: var(--color-charcoal);
+  }
+
+  .legal-page__body :global(a) {
+    color: var(--color-bronze);
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+  }
+
+  .legal-page__body :global(.legal-todo) {
+    display: block;
+    margin-top: 0.6em;
+    padding: 0.7em 1em;
+    border: 1px solid rgba(58, 47, 38, 0.25);
+    background: rgba(58, 47, 38, 0.06);
+    font-size: var(--step--1);
+    font-style: normal;
+  }
+</style>

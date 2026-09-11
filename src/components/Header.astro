@@ -46,7 +46,7 @@ import { primaryNav, siteConfig } from "../lib/site-config";
     </div>
   </div>
 
-  <div class="mobile-nav" id="mobile-nav" data-state="closed">
+  <div class="mobile-nav" id="mobile-nav" data-state="closed" inert>
     <nav aria-label="Mobile">
       <ul>
         {
@@ -80,6 +80,13 @@ import { primaryNav, siteConfig } from "../lib/site-config";
   }
 
   .site-header__bar {
+    /* Overrides the shared .container rule's z-index: 1 — the bar (and the
+       menu toggle inside it) needs to out-stack .mobile-nav's z-index: 40
+       so the toggle stays visible/clickable as a close control once the
+       panel is open, instead of being trapped under .container's lower
+       stacking context. */
+    position: relative;
+    z-index: 46;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -151,6 +158,8 @@ import { primaryNav, siteConfig } from "../lib/site-config";
   }
 
   .site-header__toggle {
+    position: relative;
+    z-index: 45;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -264,16 +273,33 @@ import { primaryNav, siteConfig } from "../lib/site-config";
   const nav = document.getElementById("mobile-nav");
 
   if (toggle && nav) {
-    const closeNav = () => {
+    // main/footer go inert while the panel is open so Tab can't reach
+    // content stacked behind the full-screen overlay; the panel itself
+    // goes inert while closed so its off-screen links aren't keyboard- or
+    // screen-reader-reachable. transform-based show/hide (not `hidden`)
+    // is what lets the slide transition keep working either way.
+    const main = document.querySelector("main");
+    const footer = document.querySelector("footer");
+
+    const closeNav = ({ returnFocus = true } = {}) => {
+      const wasOpen = toggle.getAttribute("aria-expanded") === "true";
       toggle.setAttribute("aria-expanded", "false");
       nav.dataset.state = "closed";
+      nav.setAttribute("inert", "");
+      main?.removeAttribute("inert");
+      footer?.removeAttribute("inert");
       document.body.style.overflow = "";
+      if (returnFocus && wasOpen) toggle.focus();
     };
 
     const openNav = () => {
       toggle.setAttribute("aria-expanded", "true");
       nav.dataset.state = "open";
+      nav.removeAttribute("inert");
+      main?.setAttribute("inert", "");
+      footer?.setAttribute("inert", "");
       document.body.style.overflow = "hidden";
+      nav.querySelector("a")?.focus();
     };
 
     toggle.addEventListener("click", () => {
@@ -282,7 +308,7 @@ import { primaryNav, siteConfig } from "../lib/site-config";
     });
 
     nav.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("click", closeNav);
+      link.addEventListener("click", () => closeNav({ returnFocus: false }));
     });
 
     document.addEventListener("keydown", (event) => {
@@ -293,7 +319,7 @@ import { primaryNav, siteConfig } from "../lib/site-config";
     // is open, reset state so it doesn't get stuck open behind the desktop nav.
     const desktopQuery = window.matchMedia("(min-width: 62.5em)");
     desktopQuery.addEventListener("change", (event) => {
-      if (event.matches) closeNav();
+      if (event.matches) closeNav({ returnFocus: false });
     });
   }
 </script>

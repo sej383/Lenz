@@ -6,19 +6,34 @@ import { siteConfig } from "../../../lib/site-config";
 import AerialHero from "../../../components/aerial/AerialHero.astro";
 import AerialIntro from "../../../components/aerial/AerialIntro.astro";
 import Capabilities from "../../../components/aerial/Capabilities.astro";
+import AgricultureFeature from "../../../components/aerial/AgricultureFeature.astro";
 import AerialWork from "../../../components/aerial/AerialWork.astro";
 import ServiceCta from "../../../components/ServiceCta.astro";
+
+const videoJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  name: "Harvest, From a Different View",
+  description:
+    "Aerial footage of harvest — the work, the land, and the equipment behind an agricultural operation, shot from above.",
+  thumbnailUrl: new URL("/videos/harvest-poster.jpg", Astro.site).toString(),
+  contentUrl: new URL("/videos/harvest-aerial.mp4", Astro.site).toString(),
+  uploadDate: "2026-09-10",
+  duration: "PT58S",
+};
 ---
 
 <BaseLayout
   title="Aerial Photography & Video — LENZ"
   description="FAA Part 107 licensed aerial photography and video for construction, land, commercial properties, agriculture, and specialty projects across western Iowa, the Omaha/Council Bluffs metro, and eastern Nebraska."
 >
+  <script type="application/ld+json" set:html={JSON.stringify(videoJsonLd)} />
   <Header />
   <main id="main-content">
     <AerialHero />
     <AerialIntro />
     <Capabilities />
+    <AgricultureFeature />
     <AerialWork />
     <ServiceCta
       heading="Have an Aerial Project in Mind?"
