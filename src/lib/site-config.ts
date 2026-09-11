@@ -27,13 +27,11 @@ export const siteConfig = {
 
   // Cloudflare Web Analytics beacon token — cookieless, no consent banner
   // needed, gives visitors/pageviews/top pages/referrers/country-level
-  // traffic (see PROJECT-BRIEF.md section 13). Cloudflare issues this token
-  // per-hostname, so it can't exist until the production domain is live and
-  // added under Cloudflare's Web Analytics tab. Left null on purpose — the
-  // beacon in BaseLayout.astro only renders once this is filled in, so
-  // nothing fires (and there's nothing to test) until then.
+  // traffic (see PROJECT-BRIEF.md section 13). Issued per-hostname under
+  // Cloudflare's Web Analytics tab for www.lenzphotos.com. BaseLayout.astro
+  // renders the beacon script only when this is non-null.
   analytics: {
-    cloudflareBeaconToken: null as string | null,
+    cloudflareBeaconToken: "bb3564852af74e2fb7aae18575cf0f78" as string | null,
   },
 
   // Search-engine site-verification codes (HTML meta tag method). Both null
