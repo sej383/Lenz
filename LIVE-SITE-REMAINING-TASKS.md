@@ -38,6 +38,12 @@ repo has no access to, not code.
       `googleSiteVerification` and `bingSiteVerification` fields (both `null`), rendered as
       `<meta name="google-site-verification">` / `<meta name="msvalidate.01">` in
       `BaseLayout.astro` only once a real value is set. See section B for how to use this.
+- [x] **Cloudflare Web Analytics — COMPLETE.** Token issued for `www.lenzphotos.com` is live in
+      `siteConfig.analytics.cloudflareBeaconToken`. Verified on production: exactly one beacon
+      script tag (no duplicates), correct token, CSP's `script-src`/`connect-src` already allowed
+      both Cloudflare origins (no violations), and — via the browser's own Performance API on the
+      live site — both the script load and the actual `cloudflareinsights.com/cdn-cgi/rum` beacon
+      request completed successfully. Don't re-flag unless the token needs to change.
 
 ---
 
@@ -46,13 +52,6 @@ repo has no access to, not code.
 Everything the code side needs is already shipped and confirmed live. What's left is entirely
 account-level setup in Cloudflare/Google/Bing's own dashboards.
 
-- [ ] **Cloudflare Web Analytics.** Code is ready and confirmed idle (no beacon script renders while
-      the token is unset — verified live). To activate: add `www.lenzphotos.com` under Cloudflare's
-      **Web Analytics** tab (this does *not* require proxying DNS through Cloudflare — it just
-      issues a per-hostname JS beacon token), send me the token, I'll drop it into
-      `siteConfig.analytics.cloudflareBeaconToken` and redeploy. Confirm activation by checking for
-      a real pageview in Cloudflare's dashboard a few minutes after visiting the live site. **Not
-      adding GA4** unless you specifically ask for it.
 - [ ] **Google Search Console — verification options for `www.lenzphotos.com`.** Two realistic
       paths:
       1. **DNS TXT record** (Google's usual recommendation) — added at whatever registrar/DNS
@@ -72,6 +71,9 @@ account-level setup in Cloudflare/Google/Bing's own dashboards.
 - [ ] **Structured data live validation.** Already confirmed as valid, parseable JSON on the live
       site this session. Running the real production URLs through Google's Rich Results Test and
       schema.org's Validator is the last formal step — optional polish, not a known problem.
+
+**Not adding GA4** unless you specifically ask for it — Cloudflare Web Analytics is the standing
+decision for traffic/pageview visibility.
 
 ---
 
