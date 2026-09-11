@@ -36,6 +36,13 @@ deployment or a DNS decision, neither of which can happen from this repo alone.
 - [x] **Legacy-domain redirect procedure documented** — full ready-to-deploy `_redirects` content
       for `throughthelenzphoto.com`/`www` in `FULL-SITE-AUDIT.md` section 4.1. Not implemented —
       needs DNS, see section C.
+- [x] **Live inquiry delivery test to `info@lenzphotos.com` — COMPLETE.** Sarah submitted a real
+      test inquiry against the production Contact form and confirmed the email arrived at
+      `info@lenzphotos.com`. Netlify Forms + the notification routing are both confirmed working
+      end-to-end on live infrastructure — this is no longer an open item. Don't re-flag it as
+      outstanding unless a future code change touches `InquiryForm.astro`, the Netlify Forms
+      wiring, or the notification routing itself, in which case it should be re-tested and this
+      line updated accordingly.
 
 ---
 
@@ -43,10 +50,6 @@ deployment or a DNS decision, neither of which can happen from this repo alone.
 
 Nothing in this section is a code problem — these genuinely cannot be tested against `localhost`.
 
-- [ ] **Live inquiry delivery test to `info@lenzphotos.com`** — submit the real Contact form
-      against the deployed site and confirm the email actually arrives. Requires: the site deployed
-      to Netlify, and a Forms → Notifications → email rule configured in Netlify's dashboard first
-      (dashboard setting, not code — I don't have access to configure this myself).
 - [ ] **Cloudflare Web Analytics activation** — add the production hostname under Cloudflare's
       dashboard (Web Analytics tab), copy the issued beacon token into
       `siteConfig.analytics.cloudflareBeaconToken`, redeploy, confirm a real pageview reports back.
