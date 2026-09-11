@@ -4,6 +4,18 @@
 # real content — /category/all-products, /my-addresses, /cart-page) are intentionally NOT redirected
 # per the audit's recommendation and are left to 404.
 
+# throughthelenzphoto.com and www.throughthelenzphoto.com are attached to this same Netlify site
+# as domain aliases (not a separate site), which means Netlify serves this site's real content
+# under those hostnames directly rather than redirecting — the automatic "redirect non-primary to
+# primary" behavior only covers the apex/www pair of the SAME registered domain
+# (lenzphotos.com -> www.lenzphotos.com), not a different aliased domain. These two host-scoped
+# rules force every request on either legacy hostname to the canonical domain first, preserving
+# the path; the unqualified rules below then handle the old-Wix-path-specific remapping as a
+# second hop once the request lands on www.lenzphotos.com. Must stay first in this file so they
+# win over the path-only rules for requests still arriving on the legacy hostnames.
+https://throughthelenzphoto.com/*      https://www.lenzphotos.com/:splat   301!
+https://www.throughthelenzphoto.com/*  https://www.lenzphotos.com/:splat   301!
+
 /about                          /about/                          301
 /contact                        /contact/                        301
 /blog                           /blog/                            301
