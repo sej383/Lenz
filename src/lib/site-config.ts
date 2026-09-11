@@ -35,6 +35,17 @@ export const siteConfig = {
   analytics: {
     cloudflareBeaconToken: null as string | null,
   },
+
+  // Search-engine site-verification codes (HTML meta tag method). Both null
+  // until you paste the value each console issues after choosing "HTML tag"
+  // as the verification method — the DNS TXT record method works too and
+  // needs no code change at all, but these are here so the meta-tag route
+  // is a one-line fill-in instead of a new round of code changes. Nothing
+  // renders until a real value is set.
+  search: {
+    googleSiteVerification: null as string | null,
+    bingSiteVerification: null as string | null,
+  },
 } as const;
 
 export type NavLink = {

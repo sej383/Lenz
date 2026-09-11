@@ -34,6 +34,13 @@ const socialImageURL = new URL(image, Astro.site);
     <title>{title}</title>
     <meta name="description" content={description} />
 
+    {siteConfig.search.googleSiteVerification && (
+      <meta name="google-site-verification" content={siteConfig.search.googleSiteVerification} />
+    )}
+    {siteConfig.search.bingSiteVerification && (
+      <meta name="msvalidate.01" content={siteConfig.search.bingSiteVerification} />
+    )}
+
     <meta property="og:type" content={type} />
     <meta property="og:site_name" content={siteConfig.name} />
     <meta property="og:title" content={title} />

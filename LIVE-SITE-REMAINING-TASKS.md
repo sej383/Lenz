@@ -1,92 +1,82 @@
 # LENZ — Remaining Tasks to Live Launch
 
-Tracks what's actually left between "code is ready" and "lenzphotos.com is live." Grouped by what
-kind of action each item needs — most of the list is already done; what's left mostly needs a real
-deployment or a DNS decision, neither of which can happen from this repo alone.
+Tracks what's actually left now that `www.lenzphotos.com` is the live, confirmed-working production
+site (HTTPS valid, legacy domains redirecting correctly — see the domain verification pass in this
+session's history). What's left is almost entirely dashboard actions in third-party services this
+repo has no access to, not code.
 
 ---
 
-## A. Done in code, verified locally — nothing further needed here
+## A. Done — code shipped, verified live on production
 
-- [x] **Production Contact form handler** — wired for Netlify Forms (`data-netlify="true"`, real
-      `fetch` POST with genuine success/error states, `InquiryForm.astro`).
-- [x] **Spam protection** — honeypot field reused by Netlify's own `netlify-honeypot="website"`
-      filtering; bot-filled submissions are silently short-circuited client-side before any network
-      call.
-- [x] **"Development Preview" messaging removed** — gone from the Contact page and the form's
-      success state.
-- [x] **Canonical tags** — every page, via `BaseLayout.astro`.
-- [x] **Open Graph / Twitter Card metadata** — every page, default image is the branded
-      `og-image.jpg`.
-- [x] **XML sitemap** — `@astrojs/sitemap`, 16 URLs, 404 correctly excluded.
-- [x] **`robots.txt`** — present, references the sitemap.
-- [x] **Organization/business structured data** — `ProfessionalService` schema on the homepage.
-- [x] **BlogPosting structured data** — present and valid on all 3 migrated posts (re-verified this
-      pass).
-- [x] **VideoObject structured data** — present and valid on the Aerial page for the harvest film
-      (re-verified this pass).
-- [x] **Privacy Policy retention wording** — updated to the purpose-based statement (no fixed
-      deletion period promised).
-- [x] **Terms of Use governing-law clause** — states Iowa as the working jurisdiction, explicitly
-      flagged on-page as attorney-review-recommended rather than presented as settled legal advice.
-- [x] **Cloudflare Web Analytics — code side** — `siteConfig.analytics.cloudflareBeaconToken` is
-      wired into `BaseLayout.astro`; the beacon script only renders once a real token is filled in.
+- [x] **Production Contact form handler** — Netlify Forms, real `fetch` POST with genuine
+      success/error states.
+- [x] **Spam protection** — honeypot reused by Netlify's own `netlify-honeypot="website"` filtering.
+- [x] **"Development Preview" messaging removed.**
+- [x] **Canonical tags** — every page.
+- [x] **Open Graph / Twitter Card metadata** — every page.
+- [x] **XML sitemap** — `https://www.lenzphotos.com/sitemap-index.xml`, 16 URLs, confirmed live and
+      returning valid XML.
+- [x] **`robots.txt`** — live, references the sitemap.
+- [x] **Structured data** — `ProfessionalService` (home), `BlogPosting` (3 posts), `VideoObject`
+      (Aerial page) — all confirmed valid JSON-LD live in production.
+- [x] **Privacy Policy / Terms of Use / Accessibility Statement** — live, with the retention wording
+      and Iowa governing-law clause from this session.
 - [x] **Security headers** — CSP, X-Content-Type-Options, X-Frame-Options, Referrer-Policy,
-      Permissions-Policy in `netlify.toml`. HSTS intentionally not yet added (see section C).
-- [x] **Legacy-domain redirect procedure documented** — full ready-to-deploy `_redirects` content
-      for `throughthelenzphoto.com`/`www` in `FULL-SITE-AUDIT.md` section 4.1. Not implemented —
-      needs DNS, see section C.
-- [x] **Live inquiry delivery test to `info@lenzphotos.com` — COMPLETE.** Sarah submitted a real
-      test inquiry against the production Contact form and confirmed the email arrived at
-      `info@lenzphotos.com`. Netlify Forms + the notification routing are both confirmed working
-      end-to-end on live infrastructure — this is no longer an open item. Don't re-flag it as
-      outstanding unless a future code change touches `InquiryForm.astro`, the Netlify Forms
-      wiring, or the notification routing itself, in which case it should be re-tested and this
-      line updated accordingly.
+      Permissions-Policy confirmed present on live responses. HSTS is also live — turned out to be
+      Netlify's own default once a custom domain + SSL is attached, not something this repo added.
+- [x] **HTTPS on the primary domain** — confirmed live, valid certificate, HTTP→HTTPS redirect
+      working, on `www.lenzphotos.com`, `lenzphotos.com`, `throughthelenzphoto.com`, and
+      `www.throughthelenzphoto.com`.
+- [x] **Legacy domain redirects** — `throughthelenzphoto.com` and `www.throughthelenzphoto.com` both
+      301 straight to `https://www.lenzphotos.com`; every mapped old URL (blog posts,
+      `/real-estate-portfolio`, `/drone-photography`, `/about`, `/book-now`, etc.) redirects to its
+      correct new page, verified through both legacy hostnames.
+- [x] **Live inquiry delivery test — COMPLETE.** Sarah submitted a real test inquiry and confirmed
+      it arrived at `info@lenzphotos.com`. Don't re-flag unless a future change touches the form.
+- [x] **Google/Bing site-verification meta tags — code ready.** `siteConfig.search` now has
+      `googleSiteVerification` and `bingSiteVerification` fields (both `null`), rendered as
+      `<meta name="google-site-verification">` / `<meta name="msvalidate.01">` in
+      `BaseLayout.astro` only once a real value is set. See section B for how to use this.
 
 ---
 
-## B. Can only be verified once the site is actually deployed somewhere public
+## B. Analytics & search visibility — dashboard actions, not code
 
-Nothing in this section is a code problem — these genuinely cannot be tested against `localhost`.
+Everything the code side needs is already shipped and confirmed live. What's left is entirely
+account-level setup in Cloudflare/Google/Bing's own dashboards.
 
-- [ ] **Cloudflare Web Analytics activation** — add the production hostname under Cloudflare's
-      dashboard (Web Analytics tab), copy the issued beacon token into
-      `siteConfig.analytics.cloudflareBeaconToken`, redeploy, confirm a real pageview reports back.
-      Doesn't require proxying DNS through Cloudflare — just a hostname registration there.
-- [ ] **Google Search Console readiness** — verify the property (DNS TXT or HTML-tag method) and
-      submit `https://www.lenzphotos.com/sitemap-index.xml`. Sitemap/robots.txt are already
-      correct and waiting; verification itself needs the live domain to exist first.
-- [ ] **Bing Webmaster Tools readiness** — same idea; Bing supports importing straight from a
-      verified GSC property, which is usually the faster path once GSC is done.
-- [ ] **Structured data live validation** — run the real production URLs through Google's Rich
-      Results Test and schema.org's Validator. Already confirmed valid JSON locally (this pass); a
-      live-URL check is the last step.
-
-## C. Blocked on a DNS/domain decision — will not proceed without showing you the exact change first
-
-- [ ] **Confirm HTTPS on the live primary domain, then enable HSTS.** Netlify auto-provisions TLS
-      once a domain is attached — this needs the domain actually pointed at Netlify first. Once
-      confirmed working, adding HSTS is a one-line change to the existing `netlify.toml` headers
-      block.
-- [ ] **Legacy-domain redirects (`throughthelenzphoto.com` + `www`)** — the procedure and exact
-      `_redirects` content are written and ready (`FULL-SITE-AUDIT.md` section 4.1); implementing
-      it means creating a second small Netlify site and pointing that domain's DNS at it. Not done.
-- [ ] **`lenzphotos.com` DNS → Netlify.** This is the actual go-live switch. Per your own earlier
-      instruction, this doesn't happen until you've reviewed the deployed build on its Netlify
-      staging URL first.
-
-**Before touching any of the above:** I'll show the exact DNS records (type, host, value) that
-would change, and wait for explicit confirmation — nothing in section C happens silently.
+- [ ] **Cloudflare Web Analytics.** Code is ready and confirmed idle (no beacon script renders while
+      the token is unset — verified live). To activate: add `www.lenzphotos.com` under Cloudflare's
+      **Web Analytics** tab (this does *not* require proxying DNS through Cloudflare — it just
+      issues a per-hostname JS beacon token), send me the token, I'll drop it into
+      `siteConfig.analytics.cloudflareBeaconToken` and redeploy. Confirm activation by checking for
+      a real pageview in Cloudflare's dashboard a few minutes after visiting the live site. **Not
+      adding GA4** unless you specifically ask for it.
+- [ ] **Google Search Console — verification options for `www.lenzphotos.com`.** Two realistic
+      paths:
+      1. **DNS TXT record** (Google's usual recommendation) — added at whatever registrar/DNS
+         provider now manages `lenzphotos.com`'s DNS. No code change, nothing from me needed except
+         confirming it once added.
+      2. **HTML tag method** — Google gives you a `<meta name="google-site-verification"
+         content="...">` snippet; send me just the `content` value and I'll drop it into
+         `siteConfig.search.googleSiteVerification` (already wired, confirmed rendering nothing
+         while unset) — one line, one redeploy, done.
+      Either way: once verified, submit the sitemap at
+      **`https://www.lenzphotos.com/sitemap-index.xml`** — confirmed live, valid XML, all 16 real
+      pages listed, 404 correctly excluded. Ready to submit as-is.
+- [ ] **Bing Webmaster Tools.** Same two paths as Google — Bing also supports a meta-tag method
+      (`siteConfig.search.bingSiteVerification` is wired the same way), or importing directly from
+      an already-verified Search Console property, which is usually the faster route once GSC is
+      done. Same sitemap URL applies.
+- [ ] **Structured data live validation.** Already confirmed as valid, parseable JSON on the live
+      site this session. Running the real production URLs through Google's Rich Results Test and
+      schema.org's Validator is the last formal step — optional polish, not a known problem.
 
 ---
 
-## What I need from you to keep going
+## C. Not started, no action needed yet
 
-1. **Has the GitHub → Netlify import been done yet?** (Add new site → Import from GitHub →
-   `sej383/Lenz`.) If yes — what's the site's current `*.netlify.app` URL, so I can actually test
-   against something real instead of localhost? If no, that's the next concrete step before any of
-   section B can start.
-2. Everything in section A is already pushed to `main` as of this session (see commit list below)
-   — Netlify will pick it up automatically on the next deploy *if* continuous deployment from
-   GitHub is already connected.
+- [ ] **`book.lenzphotos.com`** — preserved as a possible future branded HDPhotoHub subdomain (see
+      `HDPHOTOHUB-BRAND-CONSISTENCY-CHECKLIST.md`). Not configured. No DNS record exists for it and
+      none should be added until you decide to actually set this up.
