@@ -1,0 +1,50 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import PortfolioGallery from "../../components/portfolio/PortfolioGallery.astro";
+---
+
+<BaseLayout
+  title="Portfolio — LENZ"
+  description="A gallery of LENZ photography and aerial work — commercial, branding, real estate, and aerial imagery across western Iowa, the Omaha/Council Bluffs metro, and eastern Nebraska."
+>
+  <Header />
+  <main id="main-content">
+    <section class="portfolio-page">
+      <div class="container">
+        <h1 class="portfolio-page__heading">Portfolio</h1>
+        <p class="portfolio-page__lead">
+          A small sampling from a much larger body of work — spanning real estate, commercial,
+          branding and aerial photography.
+        </p>
+        <PortfolioGallery />
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .portfolio-page {
+    background: var(--color-cream);
+    padding-block: var(--space-md) var(--space-xl);
+  }
+
+  .portfolio-page__heading {
+    font-family: var(--font-body);
+    font-size: var(--step--1);
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    margin: 0 0 var(--space-xs);
+  }
+
+  .portfolio-page__lead {
+    font-size: var(--step--1);
+    color: var(--color-muted);
+    max-width: 34rem;
+    margin: 0 0 var(--space-sm);
+  }
+</style>

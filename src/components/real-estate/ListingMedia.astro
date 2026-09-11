@@ -1,0 +1,102 @@
+---
+// A quiet, text-forward index of everything LENZ can provide for a
+// listing — not a photography portfolio grid. Deliberately plain: a
+// hairline rule and a small gold order mark per row, no cards, no icons
+// that would compete with the photography elsewhere on the page.
+const services = [
+  {
+    name: "Professional Photography",
+    copy: "Interior and exterior stills that show a property accurately and beautifully.",
+  },
+  {
+    name: "Aerial / Drone Photography",
+    copy: "FAA Part 107 licensed and insured aerial coverage for exteriors, acreage, and land.",
+  },
+  {
+    name: "Property Video / Reels",
+    copy: "Walkthrough and highlight video built for listings and social media.",
+  },
+  {
+    name: "Floor Plans",
+    copy: "Clear, accurate floor plans buyers can reference alongside the photos.",
+  },
+  {
+    name: "3D Tours",
+    copy: "Interactive, self-guided tours buyers can explore on their own time.",
+  },
+  {
+    name: "Twilight / Virtual Twilight",
+    copy: "Dusk exterior photography, captured live or created virtually.",
+  },
+  {
+    name: "Virtual Staging",
+    copy: "Digitally furnished rooms for vacant listings.",
+  },
+  {
+    name: "Property Websites / Marketing",
+    copy: "Single-property websites and marketing collateral, where applicable.",
+  },
+];
+---
+
+<section class="section section--dark surface-leather listing-media">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Listing Media</p>
+      <h2>More Than Still Photos</h2>
+    </div>
+
+    <dl class="listing-media__grid">
+      {
+        services.map((item) => (
+          <div class="listing-media__item">
+            <dt>{item.name}</dt>
+            <dd>{item.copy}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</section>
+
+<style>
+  .listing-media__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin: 0;
+  }
+
+  .listing-media__item {
+    padding-block: var(--space-sm);
+    border-top: 1px solid rgba(224, 176, 104, 0.2);
+  }
+
+  .listing-media__item:last-child {
+    border-bottom: 1px solid rgba(224, 176, 104, 0.2);
+  }
+
+  .listing-media__item dt {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--step-0);
+    color: var(--color-offwhite);
+  }
+
+  .listing-media__item dd {
+    margin: 0.35em 0 0;
+    color: var(--color-muted-on-dark);
+    max-width: 34rem;
+  }
+
+  @media (min-width: 48em) {
+    .listing-media__grid {
+      grid-template-columns: repeat(2, 1fr);
+      column-gap: var(--space-lg);
+    }
+
+    .listing-media__item:nth-last-child(-n + 2) {
+      border-bottom: 1px solid rgba(224, 176, 104, 0.2);
+    }
+  }
+</style>

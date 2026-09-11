@@ -1,0 +1,181 @@
+---
+// Deliberately a different treatment from the homepage's Services section
+// (image-behind-text tiles with a gradient scrim) — this is a hub page,
+// not another homepage, so cards use a plain image-above-text layout:
+// simpler, more directory-like, easier to scan. Descriptions and images
+// are reused verbatim from the homepage's already-approved copy — no new
+// content decisions needed for a page whose whole job is to hand visitors
+// off to the real service pages.
+import { Image } from "astro:assets";
+import commercialPhoto from "../../assets/photos/svc-commercial-gretna.jpg";
+import brandingPhoto from "../../assets/photos/svc-branding-coffee.jpg";
+import aerialPhoto from "../../assets/photos/hero-aerial.jpg";
+import realEstatePhoto from "../../assets/photos/svc-realestate-elkhorn.jpg";
+import { siteConfig } from "../../lib/site-config";
+
+const services = [
+  {
+    key: "real-estate",
+    label: "Real Estate",
+    href: "/services/real-estate/",
+    description: "Listing photography ordered and delivered through a fast, professional booking system.",
+    image: realEstatePhoto,
+    alt: "Stone and metal-roofed home exterior on a sunny day",
+    secondaryCta: { label: "Book Real Estate", href: siteConfig.bookRealEstateUrl, external: true },
+  },
+  {
+    key: "commercial",
+    label: "Commercial",
+    href: "/services/commercial/",
+    description:
+      "Leasing offices, retail centers, industrial sites, and multifamily communities — photographed and flown to show a property at its most leasable.",
+    image: commercialPhoto,
+    alt: "Aerial view of the Gretna Rural Fire Department building",
+  },
+  {
+    key: "branding",
+    label: "Branding",
+    href: "/services/branding/",
+    description: "Product photography, headshots, and brand imagery built for your website, deck, or ad campaign.",
+    image: brandingPhoto,
+    alt: "Close-up product photography of a burlap coffee sack",
+  },
+  {
+    key: "aerial",
+    label: "Aerial",
+    href: "/services/aerial/",
+    description: "FAA Part 107 licensed drone coverage for real estate, construction progress, land, and events.",
+    image: aerialPhoto,
+    alt: "Straight-down aerial view of a large home with a backyard pool",
+  },
+];
+---
+
+<div class="services-overview__grid">
+  {
+    services.map((service) => (
+      <article class="services-overview__card">
+        <a class="services-overview__media" href={service.href}>
+          <Image
+            src={service.image}
+            alt={service.alt}
+            widths={[400, 650, 900]}
+            width={900}
+            sizes="(min-width: 50em) 45vw, 100vw"
+          />
+        </a>
+        <div class="services-overview__body">
+          <h2>
+            <a href={service.href}>{service.label}</a>
+          </h2>
+          <p>{service.description}</p>
+          <div class="services-overview__links">
+            <a class="btn btn-secondary services-overview__explore" href={service.href}>
+              Explore {service.label}
+            </a>
+            {service.secondaryCta && (
+              <a
+                class="services-overview__secondary"
+                href={service.secondaryCta.href}
+                target={service.secondaryCta.external ? "_blank" : undefined}
+                rel={service.secondaryCta.external ? "noopener noreferrer" : undefined}
+              >
+                {service.secondaryCta.label}
+                {service.secondaryCta.external && (
+                  <span class="visually-hidden">(opens the HDPhotoHub booking site in a new tab)</span>
+                )}
+              </a>
+            )}
+          </div>
+        </div>
+      </article>
+    ))
+  }
+</div>
+
+<style>
+  .services-overview__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
+  .services-overview__card {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .services-overview__media {
+    display: block;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: var(--color-charcoal-soft);
+  }
+
+  .services-overview__media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 900ms var(--ease-editorial);
+  }
+
+  .services-overview__media:hover :global(img),
+  .services-overview__media:focus-visible :global(img) {
+    transform: scale(1.03);
+  }
+
+  .services-overview__body {
+    margin-top: var(--space-xs);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5em;
+  }
+
+  .services-overview__body h2 {
+    font-size: var(--step-2);
+    font-weight: 500;
+  }
+
+  .services-overview__body h2 a {
+    color: var(--color-charcoal);
+  }
+
+  .services-overview__body h2 a:hover,
+  .services-overview__body h2 a:focus-visible {
+    color: var(--color-bronze);
+  }
+
+  .services-overview__body p {
+    color: var(--color-muted);
+    max-width: 30rem;
+  }
+
+  .services-overview__links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-top: 0.4em;
+  }
+
+  .services-overview__secondary {
+    font-size: var(--step--1);
+    font-weight: 600;
+    color: var(--color-muted);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .services-overview__secondary:hover,
+  .services-overview__secondary:focus-visible {
+    color: var(--color-bronze);
+  }
+
+  @media (min-width: 50em) {
+    .services-overview__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-lg) var(--space-md);
+    }
+  }
+</style>

@@ -1,0 +1,92 @@
+---
+// Single-image, full-bleed hero — same proven structure as the Commercial
+// hero, so service pages share one visual language. The image itself is
+// what carries this page's identity.
+import { Image } from "astro:assets";
+import prairieStarPhoto from "../../assets/photos/hero-branding.jpg";
+---
+
+<section class="branding-hero texture-charcoal">
+  <Image
+    src={prairieStarPhoto}
+    alt="Product photography of amber glass botanical spray bottles"
+    widths={[700, 1100, 1500, 1900, 2400]}
+    width={2400}
+    sizes="100vw"
+    loading="eager"
+    class="branding-hero__image"
+  />
+
+  <div class="branding-hero__scrim" aria-hidden="true"></div>
+
+  <div class="container branding-hero__content">
+    <p class="eyebrow">Services · Branding</p>
+    <h1>Photography for Products, People, and the Brands Behind Them</h1>
+    <p class="branding-hero__copy">
+      Product, people, and brand imagery built for websites, advertising, and social media —
+      created to look like your business, not a stock photo.
+    </p>
+    <a class="btn btn-primary" href="/contact/">Start a Project</a>
+  </div>
+</section>
+
+<style>
+  .branding-hero {
+    position: relative;
+    min-height: clamp(26rem, 80vh, 42rem);
+    display: flex;
+    align-items: flex-end;
+    background: var(--surface-dark);
+    overflow: hidden;
+  }
+
+  .branding-hero :global(.branding-hero__image) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
+
+  .branding-hero__scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(to top, rgba(15, 13, 11, 0.92) 0%, rgba(15, 13, 11, 0.55) 40%, rgba(15, 13, 11, 0.1) 75%);
+  }
+
+  .branding-hero__content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding-block: var(--space-xl) var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-xs);
+    color: var(--color-offwhite);
+  }
+
+  .branding-hero__content h1 {
+    font-size: var(--step-4);
+    font-weight: 500;
+    max-width: 24ch;
+    margin-top: 0.2em;
+  }
+
+  .branding-hero__copy {
+    max-width: 32rem;
+    color: var(--color-muted-on-dark);
+  }
+
+  .branding-hero__content .btn {
+    margin-top: var(--space-xs);
+  }
+
+  @media (min-width: 62.5em) {
+    .branding-hero {
+      min-height: clamp(30rem, 90vh, 46rem);
+    }
+  }
+</style>

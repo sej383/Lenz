@@ -1,0 +1,90 @@
+---
+// Deliberately editorial prose, not a three-card "how it works" grid —
+// the client-experience story reads better as flowing text than as
+// process steps, and it keeps this page from feeling like another
+// service page.
+import { Image } from "astro:assets";
+import portrait from "../../assets/about/sarah-portrait.jpg";
+---
+
+<section class="section section--dark surface-leather working-with-lenz">
+  <div class="container working-with-lenz__inner">
+    <div class="working-with-lenz__text">
+      <div class="section-head">
+        <p class="eyebrow">Working With LENZ</p>
+        <h2>You're Working With Sarah — Not a Sales Team</h2>
+      </div>
+
+      <div class="working-with-lenz__copy">
+        <p>
+          When you reach out to LENZ, you're talking directly to the person who will be behind the
+          camera or flying the drone. There's no handoff between a sales call and the actual shoot
+          — the same person planning your project is the one creating the imagery, from the first
+          conversation to final delivery.
+        </p>
+        <p>
+          That matters for consistency. Photography and aerial work are treated as one capability,
+          not two separate services — a listing, a commercial property, or a construction site can
+          get ground photography and professional aerial coverage from the same shoot, planned
+          together rather than booked separately.
+        </p>
+        <p>
+          Every image is created with where it's actually going to be used in mind — a listing, a
+          website, an ad campaign, social media, print, or other marketing — not just captured and
+          handed over. And while LENZ is based in western Iowa, travel is available for commercial
+          and specialty projects across the wider region.
+        </p>
+      </div>
+    </div>
+
+    <div class="working-with-lenz__portrait">
+      <Image src={portrait} alt="Portrait of Sarah Lenz, LENZ founder and photographer" width={800} widths={[400, 600, 800]} sizes="(min-width: 55em) 28vw, 70vw" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .working-with-lenz__copy {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    max-width: 42rem;
+    font-size: var(--step-0);
+    color: var(--color-muted-on-dark);
+  }
+
+  .working-with-lenz__portrait {
+    aspect-ratio: 3 / 4;
+    max-width: 20rem;
+    overflow: hidden;
+    border: 1px solid rgba(224, 176, 104, 0.16);
+    margin-top: var(--space-lg);
+  }
+
+  .working-with-lenz__portrait :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media (min-width: 55em) {
+    .working-with-lenz__inner {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--space-xl);
+    }
+
+    .working-with-lenz__text {
+      flex: 1;
+    }
+
+    .working-with-lenz__portrait {
+      flex-shrink: 0;
+      width: 20rem;
+      max-width: 26vw;
+      margin-top: 0;
+    }
+  }
+</style>

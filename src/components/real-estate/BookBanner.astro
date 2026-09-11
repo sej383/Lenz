@@ -1,0 +1,52 @@
+---
+// A slim mid-page reinforcement of the one real conversion path on this
+// page — lighter than the full ServiceCta used at the end, and it doubles
+// as a light-section beat between two dark sections (Listing Media and
+// Capabilities) so the page doesn't run two dark blocks back to back.
+// A single fine gold rule (matching the hairline device used in the
+// eyebrow/capability-row borders elsewhere) replaces the plain charcoal
+// framing border, and an eyebrow gives the line real hierarchy instead of
+// one undifferentiated sentence.
+import { siteConfig } from "../../lib/site-config";
+---
+
+<section class="section section--light section--sand book-banner">
+  <div class="container book-banner__inner">
+    <div class="book-banner__text">
+      <p class="eyebrow">Book Now</p>
+      <p class="book-banner__copy">Real estate photography books directly online — pick a time and we'll take it from there.</p>
+    </div>
+    <a class="btn btn-secondary" href={siteConfig.bookRealEstateUrl} target="_blank" rel="noopener noreferrer">
+      Book Real Estate
+      <span class="visually-hidden">(opens the HDPhotoHub booking site in a new tab)</span>
+    </a>
+  </div>
+</section>
+
+<style>
+  .book-banner {
+    padding-block: var(--space-md);
+  }
+
+  .book-banner__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    border-top: 1px solid rgba(224, 176, 104, 0.35);
+    padding-top: var(--space-sm);
+  }
+
+  .book-banner__text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35em;
+  }
+
+  .book-banner__copy {
+    font-size: var(--step-0);
+    color: var(--color-muted);
+    margin: 0;
+  }
+</style>

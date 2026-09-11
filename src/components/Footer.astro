@@ -1,0 +1,161 @@
+---
+import { Image } from "astro:assets";
+import wordmark from "../assets/logo/lenz-wordmark-on-dark.png";
+import { primaryNav, siteConfig } from "../lib/site-config";
+
+const serviceLinks = [
+  { label: "Commercial", href: "/services/commercial/" },
+  { label: "Branding", href: "/services/branding/" },
+  { label: "Real Estate", href: "/services/real-estate/" },
+  { label: "Aerial", href: "/services/aerial/" },
+];
+
+const year = new Date().getFullYear();
+const telHref = siteConfig.contact.phone ? `tel:${siteConfig.contact.phone.replace(/[^\d+]/g, "")}` : null;
+---
+
+<footer class="site-footer surface-leather">
+  <div class="container site-footer__grid">
+    <div class="site-footer__brand">
+      <Image src={wordmark} alt="LENZ" width={220} />
+      <p>{siteConfig.tagline}</p>
+    </div>
+
+    <nav class="site-footer__col" aria-label="Footer">
+      <h3>Navigate</h3>
+      <ul>
+        {primaryNav.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
+      </ul>
+    </nav>
+
+    <nav class="site-footer__col" aria-label="Services">
+      <h3>Services</h3>
+      <ul>
+        {serviceLinks.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
+      </ul>
+    </nav>
+
+    <div class="site-footer__col">
+      <h3>Contact</h3>
+      <ul class="site-footer__placeholder-list">
+        <li>
+          Email —{" "}
+          {siteConfig.contact.email ? (
+            <a href={`mailto:${siteConfig.contact.email}`}>{siteConfig.contact.email}</a>
+          ) : (
+            <em>add contact email</em>
+          )}
+        </li>
+        <li>
+          Phone —{" "}
+          {siteConfig.contact.phone && telHref ? (
+            <a href={telHref}>{siteConfig.contact.phone}</a>
+          ) : (
+            <em>add phone number</em>
+          )}
+        </li>
+        <li>
+          Facebook —{" "}
+          {siteConfig.contact.facebookUrl ? (
+            <a href={siteConfig.contact.facebookUrl} target="_blank" rel="noopener noreferrer">
+              Visit page
+            </a>
+          ) : (
+            <em>add page link</em>
+          )}
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="container site-footer__bottom">
+    <p>{siteConfig.baseLocation} · Serving {siteConfig.serviceArea}</p>
+    <p>FAA Part 107 Certified Remote Pilot</p>
+    <p>&copy; {year} LENZ. All rights reserved.</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    color: var(--color-muted-on-dark);
+    padding-block: var(--space-lg) var(--space-md);
+  }
+
+  .site-footer__grid {
+    display: grid;
+    gap: var(--space-lg);
+    padding-bottom: var(--space-lg);
+    border-bottom: 1px solid var(--color-hairline);
+  }
+
+  .site-footer__brand :global(img) {
+    width: 9rem;
+    height: auto;
+  }
+
+  .site-footer__brand p {
+    margin-top: var(--space-2xs);
+    font-size: var(--step--1);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-gold-soft);
+    max-width: 14rem;
+  }
+
+  .site-footer__col h3 {
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-offwhite);
+    margin-bottom: var(--space-xs);
+  }
+
+  .site-footer__col ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65em;
+  }
+
+  .site-footer__col a {
+    font-size: var(--step--1);
+    transition: color var(--duration-base) var(--ease-editorial);
+  }
+
+  .site-footer__col a:hover,
+  .site-footer__col a:focus-visible {
+    color: var(--color-gold-soft);
+  }
+
+  .site-footer__placeholder-list li {
+    font-size: var(--step--1);
+  }
+
+  .site-footer__placeholder-list em {
+    font-style: normal;
+    color: var(--color-muted-on-dark);
+    opacity: 0.7;
+  }
+
+  .site-footer__bottom {
+    padding-top: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    font-size: var(--step--1);
+  }
+
+  @media (min-width: 40em) {
+    .site-footer__grid {
+      grid-template-columns: 1.4fr repeat(3, 1fr);
+    }
+  }
+
+  @media (min-width: 50em) {
+    .site-footer__bottom {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+</style>

@@ -1,0 +1,100 @@
+---
+// A pure photography gallery — no titles, captions, or category labels
+// surfaced. Category/order metadata stays in the content collection for
+// future CMS use, but only imageAlt (for accessibility) reaches the DOM.
+//
+// Layout is CSS column-based masonry so each photo keeps its native
+// aspect ratio instead of being cropped into a uniform tile — the one
+// deliberate structural difference from every service-page gallery,
+// which all use fixed-aspect cropped grids.
+//
+// Curated order below is hand-sequenced (not the shared `featuredOrder`
+// field, which drives other pages) to alternate category and alternate
+// aerial/elevated shots against ground-level/interior/product shots, so
+// neither similar subject matter nor a single category clusters visually.
+// Verified by rendering at each breakpoint; adjust this order, not the
+// image selection, if clustering appears.
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
+
+const order = [
+  "fitness-portrait",
+  "gretna-fire-department",
+  "elkhorn-kitchen",
+  "brick-ranch-aerial",
+  "prairie-star-botanicals",
+  "nebraska-crossing",
+  "modern-entry",
+  "aerial-foundation-progress",
+  "coffee-product",
+  "aerial-pool-construction",
+  "twilight-pool-martha-st",
+  "aerial-windmill",
+  "empathy-works-product",
+  "aerial-harvest-dusk",
+  "pickard-fireplace",
+  "aerial-parcel-overlay",
+  "gnome-figurines",
+  "southern-tire-mart",
+  "muse-firepit",
+  "muse-courtyard",
+];
+
+const entries = await getCollection("work");
+const byId = new Map(entries.map((entry) => [entry.id, entry]));
+const items = order.map((id) => byId.get(id)).filter((entry) => entry !== undefined);
+---
+
+<div class="portfolio-gallery">
+  {
+    items.map((item, i) => (
+      <figure class="portfolio-gallery__item">
+        <Image
+          src={item.data.image}
+          alt={item.data.imageAlt}
+          widths={[400, 700, 1000]}
+          width={1000}
+          sizes="(min-width: 90em) min(25vw, 440px), (min-width: 62.5em) 33vw, (min-width: 48em) 48vw, (min-width: 30em) 50vw, 100vw"
+          loading={i < 4 ? "eager" : "lazy"}
+        />
+      </figure>
+    ))
+  }
+</div>
+
+<style>
+  .portfolio-gallery {
+    column-count: 1;
+    column-gap: var(--space-sm);
+  }
+
+  .portfolio-gallery__item {
+    break-inside: avoid;
+    margin: 0 0 var(--space-sm);
+    line-height: 0;
+  }
+
+  .portfolio-gallery__item :global(img) {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  @media (min-width: 30em) {
+    .portfolio-gallery {
+      column-count: 2;
+    }
+  }
+
+  @media (min-width: 48em) {
+    .portfolio-gallery {
+      column-count: 3;
+    }
+  }
+
+  @media (min-width: 90em) {
+    .portfolio-gallery {
+      column-count: 4;
+    }
+  }
+</style>

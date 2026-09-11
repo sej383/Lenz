@@ -1,0 +1,101 @@
+---
+// A single-image, full-bleed hero — deliberately different from the
+// homepage's asymmetric multi-image hero. The homepage hero has to show
+// breadth across all four categories at once; a service page is already
+// about one category, so one strong image reads as more confident here,
+// not thinner.
+import { Image } from "astro:assets";
+import gretnaPhoto from "../../assets/photos/svc-commercial-gretna.jpg";
+---
+
+<section class="commercial-hero texture-charcoal">
+  <Image
+    src={gretnaPhoto}
+    alt="Aerial view of the Gretna Rural Fire Department building"
+    widths={[700, 1100, 1500, 1900, 2400]}
+    width={2400}
+    sizes="100vw"
+    loading="eager"
+    class="commercial-hero__image"
+  />
+
+  <div class="commercial-hero__scrim" aria-hidden="true"></div>
+
+  <div class="container commercial-hero__content">
+    <p class="eyebrow">Services · Commercial</p>
+    <h1>Commercial Photography Built Around the Business</h1>
+    <p class="commercial-hero__copy">
+      Professional imagery for properties, businesses, people, products, and facilities — with
+      FAA Part 107 aerial coverage available when the project calls for it.
+    </p>
+    <a class="btn btn-primary" href="/contact/">Start a Project</a>
+  </div>
+</section>
+
+<style>
+  .commercial-hero {
+    position: relative;
+    /* Bounded like the homepage hero — never shorter than a phone screen,
+       never so tall it turns into an oversized banner on an ultrawide or
+       very tall display. */
+    min-height: clamp(26rem, 80vh, 42rem);
+    display: flex;
+    align-items: flex-end;
+    background: var(--surface-dark);
+    overflow: hidden;
+  }
+
+  .commercial-hero :global(.commercial-hero__image) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
+
+  .commercial-hero__scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(to top, rgba(15, 13, 11, 0.92) 0%, rgba(15, 13, 11, 0.55) 40%, rgba(15, 13, 11, 0.1) 75%);
+  }
+
+  .commercial-hero__content {
+    position: relative;
+    z-index: 2;
+    /* Full width so this flex item's own max-width + margin-inline:auto
+       (from the shared .container class) has room to actually center the
+       text block on ultrawide displays, instead of shrink-wrapping to
+       content size and sitting at the flex row's start. */
+    width: 100%;
+    padding-block: var(--space-xl) var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-xs);
+    color: var(--color-offwhite);
+  }
+
+  .commercial-hero__content h1 {
+    font-size: var(--step-4);
+    font-weight: 500;
+    max-width: 26ch;
+    margin-top: 0.2em;
+  }
+
+  .commercial-hero__copy {
+    max-width: 34rem;
+    color: var(--color-muted-on-dark);
+  }
+
+  .commercial-hero__content .btn {
+    margin-top: var(--space-xs);
+  }
+
+  @media (min-width: 62.5em) {
+    .commercial-hero {
+      min-height: clamp(30rem, 90vh, 46rem);
+    }
+  }
+</style>

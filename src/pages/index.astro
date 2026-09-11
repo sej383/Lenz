@@ -1,0 +1,51 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Hero from "../components/Hero.astro";
+import Services from "../components/Services.astro";
+import SelectedWork from "../components/SelectedWork.astro";
+import Credibility from "../components/Credibility.astro";
+import AboutIntro from "../components/AboutIntro.astro";
+import BlogPreview from "../components/BlogPreview.astro";
+import ClosingCta from "../components/ClosingCta.astro";
+import Footer from "../components/Footer.astro";
+import { siteConfig } from "../lib/site-config";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  name: siteConfig.name,
+  description:
+    "Photography and FAA Part 107 aerial media studio offering real estate, commercial, branding, and drone photography.",
+  image: new URL("/og-image.jpg", Astro.site).toString(),
+  url: Astro.site?.toString(),
+  telephone: siteConfig.contact.phone ?? undefined,
+  email: siteConfig.contact.email ?? undefined,
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Woodbine",
+    addressRegion: "IA",
+    addressCountry: "US",
+  },
+  areaServed: siteConfig.serviceArea,
+  sameAs: [siteConfig.contact.facebookUrl].filter(Boolean),
+};
+---
+
+<BaseLayout
+  title="LENZ — Visual Storytelling from Every Angle"
+  description="LENZ is a Woodbine, Iowa–based photography and aerial media studio serving western Iowa, the Omaha/Council Bluffs metro, and eastern Nebraska with real estate, commercial, branding, and drone photography."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <Header />
+  <main id="main-content">
+    <Hero />
+    <Services />
+    <SelectedWork />
+    <Credibility />
+    <AboutIntro />
+    <BlogPreview />
+    <ClosingCta />
+  </main>
+  <Footer />
+</BaseLayout>

@@ -1,0 +1,84 @@
+---
+import { Image } from "astro:assets";
+import brandmark from "../../assets/logo/lenz-brandmark-leather.jpg";
+---
+
+<section class="section section--light about-story">
+  <div class="container about-story__inner">
+    <div class="about-story__text">
+      <p class="eyebrow">The LENZ Story</p>
+      <div class="about-story__copy">
+        <p>
+          Sarah has spent more than twenty years behind a camera. What started as photography work
+          eventually became LENZ — a studio built around doing this full time, and doing it well,
+          rather than treating it as a side pursuit.
+        </p>
+        <p>
+          Around 2019, that shifted into real estate and media photography as a full-time business.
+          Listings needed to be shot on tight timelines and to a consistent standard, and that
+          discipline — showing up, delivering fast, getting it right — became the foundation LENZ
+          was built on.
+        </p>
+        <p>
+          The work has since expanded well beyond real estate: commercial properties, branding and
+          product photography, aerial coverage for construction and agriculture, and general
+          business imagery. LENZ reflects that range — visual work for property, people, and
+          business, rather than photography confined to one niche.
+        </p>
+      </div>
+    </div>
+
+    <div class="about-story__brandmark">
+      <Image src={brandmark} alt="The LENZ wordmark on a leather background" width={900} widths={[500, 700, 900]} sizes="(min-width: 55em) 30vw, 70vw" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-story__inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .about-story__copy {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    max-width: 42rem;
+    font-size: var(--step-0);
+    color: var(--color-charcoal);
+  }
+
+  .about-story__brandmark {
+    aspect-ratio: 3 / 4;
+    max-width: 22rem;
+    overflow: hidden;
+    border: 1px solid rgba(224, 176, 104, 0.16);
+  }
+
+  .about-story__brandmark :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media (min-width: 55em) {
+    .about-story__inner {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-xl);
+    }
+
+    .about-story__text {
+      flex: 1;
+    }
+
+    .about-story__brandmark {
+      flex-shrink: 0;
+      width: 22rem;
+      max-width: 30vw;
+    }
+  }
+</style>

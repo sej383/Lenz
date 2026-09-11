@@ -1,0 +1,132 @@
+---
+// Four alternating full-width image/text rows — deliberately not the
+// homepage Services bento grid, so this page reads as its own thing.
+import { Image } from "astro:assets";
+import propertiesPhoto from "../../assets/photos/svc-commercial-ne-crossing.jpg";
+import brandPhoto from "../../assets/photos/work-commercial-chiro.jpg";
+import constructionPhoto from "../../assets/photos/work-commercial-avoca.jpg";
+import aerialPhoto from "../../assets/photos/svc-aerial-landdev.jpg";
+
+const rows = [
+  {
+    key: "properties",
+    label: "Commercial Properties & Spaces",
+    copy: "Retail centers, hospitality spaces, multifamily communities, offices, and finished commercial interiors and exteriors — photographed to show a property at its most leasable and market-ready.",
+    image: propertiesPhoto,
+    alt: "Aerial view of the Nebraska Crossing outdoor shopping center",
+  },
+  {
+    key: "brand",
+    label: "Business & Brand Imagery",
+    copy: "People at work, products, services, and everyday business environments — imagery businesses can use across websites, advertising, and social media.",
+    image: brandPhoto,
+    alt: "A chiropractor treating a patient in a clinic exam room",
+  },
+  {
+    key: "construction",
+    label: "Construction & Development",
+    copy: "Documentation of completed commercial builds for contractors and developers — a clear visual record of the finished project.",
+    image: constructionPhoto,
+    alt: "Aerial view of the Southern Tire Mart commercial facility with a water tower behind it",
+  },
+  {
+    key: "aerial",
+    label: "Aerial & Large-Scale Coverage",
+    copy: "FAA Part 107 licensed and insured drone photography for commercial properties, facilities, land, agriculture, and large sites that are difficult to capture from the ground.",
+    image: aerialPhoto,
+    alt: "Aerial view of farmland and river property with a surveyed boundary line overlay",
+  },
+];
+---
+
+<section class="section section--dark surface-leather-tall capabilities">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">What We Cover</p>
+      <h2>Four Areas of Commercial Work</h2>
+    </div>
+
+    <div class="capabilities__rows">
+      {
+        rows.map((row, i) => (
+          <article class:list={["capability-row", { "capability-row--reverse": i % 2 === 1 }]}>
+            <div class="capability-row__media">
+              <Image
+                src={row.image}
+                alt={row.alt}
+                widths={[500, 800, 1100]}
+                width={1100}
+                sizes="(min-width: 55em) 50vw, 100vw"
+              />
+            </div>
+            <div class="capability-row__body">
+              <span class="eyebrow">{row.label}</span>
+              <p>{row.copy}</p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .capabilities__rows {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .capability-row {
+    display: grid;
+    gap: var(--space-sm);
+    align-items: start;
+  }
+
+  .capability-row__media {
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    border: 1px solid rgba(224, 176, 104, 0.16);
+  }
+
+  .capability-row__media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .capability-row__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    max-width: 30rem;
+    padding-top: 0.35em;
+  }
+
+  .capability-row__body .eyebrow {
+    color: var(--color-gold-soft);
+  }
+
+  .capability-row__body p {
+    color: var(--color-muted-on-dark);
+  }
+
+  @media (min-width: 55em) {
+    .capability-row {
+      grid-template-columns: 1.3fr 1fr;
+    }
+
+    .capability-row--reverse {
+      grid-template-columns: 1fr 1.3fr;
+    }
+
+    .capability-row--reverse .capability-row__media {
+      order: 2;
+    }
+
+    .capability-row--reverse .capability-row__body {
+      order: 1;
+      justify-self: end;
+    }
+  }
+</style>

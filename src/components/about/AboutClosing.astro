@@ -1,0 +1,43 @@
+---
+// A brief, personal closing — not the heavier dual-path ClosingCta used on
+// the homepage (that component is built specifically around the Real
+// Estate booking split, which doesn't apply here). Two quiet links, not a
+// sales push.
+---
+
+<section class="section section--dark surface-leather about-closing">
+  <div class="container about-closing__inner">
+    <p class="about-closing__copy">
+      Thanks for taking the time to learn a bit about LENZ. If you'd like to see the work or
+      talk through a project, either path below works.
+    </p>
+    <div class="about-closing__links">
+      <a class="btn btn-primary" href="/work/">Explore the Portfolio</a>
+      <a class="btn btn-secondary btn-on-dark" href="/contact/">Start a Project</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-closing__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+  }
+
+  .about-closing__copy {
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    font-weight: 500;
+    color: var(--color-offwhite);
+    max-width: 34rem;
+    margin: 0;
+  }
+
+  .about-closing__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+</style>

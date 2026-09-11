@@ -1,0 +1,277 @@
+---
+import { Image } from "astro:assets";
+import wordmark from "../assets/logo/lenz-wordmark-on-dark.png";
+import commercialPhoto from "../assets/photos/hero-commercial-dominant.jpg";
+import realEstatePhoto from "../assets/photos/hero-real-estate.jpg";
+import brandingPhoto from "../assets/photos/hero-branding.jpg";
+import aerialPhoto from "../assets/photos/hero-aerial.jpg";
+
+// Width/sizes reasoning: the hero visual composition is capped at a max
+// content width (see .hero__shell max-width below), so beyond that width
+// the browser should stop requesting larger images no matter how wide the
+// viewport gets. The "sizes" strings below use CSS min() to describe that
+// cap directly, and the "widths" arrays only go as large as that capped
+// render size needs at 2x pixel density — never up to the 20-35MB
+// originals.
+const dominant = {
+  label: "Commercial",
+  image: commercialPhoto,
+  alt: "Aerial view of the Nebraska Crossing outdoor shopping center",
+  widths: [500, 800, 1100, 1400, 1700],
+  sizes: "(min-width: 62.5em) min(48vw, 860px), 100vw",
+};
+
+const supporting = [
+  {
+    label: "Real Estate",
+    image: realEstatePhoto,
+    alt: "Twilight view of a stone and shingle pool house with a lit backyard pool",
+    widths: [400, 650, 900, 1150],
+    sizes: "(min-width: 62.5em) min(21vw, 400px), 50vw",
+  },
+  {
+    label: "Branding",
+    image: brandingPhoto,
+    alt: "Product photography of amber glass botanical spray bottles",
+    widths: [400, 650, 900, 1150],
+    sizes: "(min-width: 62.5em) min(21vw, 400px), 50vw",
+  },
+  {
+    label: "Aerial",
+    image: aerialPhoto,
+    alt: "Straight-down aerial view of a large home with a backyard pool",
+    widths: [400, 650, 900, 1150],
+    sizes: "(min-width: 62.5em) min(21vw, 400px), 50vw",
+  },
+];
+---
+
+<section class="hero surface-leather surface-drift">
+  <div class="hero__shell">
+    <div class="hero__message">
+      <h1 class="hero__wordmark">
+        <Image src={wordmark} alt="LENZ" width={480} loading="eager" />
+      </h1>
+      <p class="hero__tagline" data-reveal="eyebrow">Visual Storytelling from Every Angle</p>
+      <p class="hero__copy" data-reveal="heading">
+        Commercial, branding, real estate and aerial photography created to make businesses,
+        properties and places stand out.
+      </p>
+      <div class="hero__ctas" data-reveal="body">
+        <a class="btn btn-primary" href="/work/">Explore the Work</a>
+        <a class="btn btn-secondary btn-on-dark" href="/contact/">Start a Project</a>
+      </div>
+    </div>
+
+    <div class="hero__visual" role="group" aria-label="A sample of LENZ's work across commercial, real estate, branding, and aerial photography">
+      <figure class="hero__tile hero__tile--dominant">
+        <Image
+          src={dominant.image}
+          alt={dominant.alt}
+          widths={dominant.widths}
+          width={dominant.widths[dominant.widths.length - 1]}
+          sizes={dominant.sizes}
+          loading="eager"
+        />
+        <figcaption><span class="tag">{dominant.label}</span></figcaption>
+      </figure>
+
+      <div class="hero__supporting">
+        {
+          supporting.map((item) => (
+            <figure class="hero__tile">
+              <Image
+                src={item.image}
+                alt={item.alt}
+                widths={item.widths}
+                width={item.widths[item.widths.length - 1]}
+                sizes={item.sizes}
+                loading="eager"
+              />
+              <figcaption><span class="tag">{item.label}</span></figcaption>
+            </figure>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    color: var(--color-offwhite);
+  }
+
+  /*
+   * The charcoal background (.hero, above) stays full browser width.
+   * The content itself is capped so it never grows without bound on very
+   * large/ultrawide displays — beyond ~1760px the extra width just becomes
+   * centered charcoal breathing room either side.
+   */
+  .hero__shell {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 100svh;
+    max-width: var(--container-max);
+    margin-inline: auto;
+  }
+
+  .hero__message {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-xs);
+    padding: var(--space-md) var(--container-padding);
+  }
+
+  .hero__wordmark {
+    margin: 0;
+    line-height: 0;
+  }
+
+  .hero__wordmark :global(img) {
+    width: clamp(11rem, 8.5rem + 11vw, 18rem);
+    height: auto;
+  }
+
+  .hero__tagline {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: clamp(0.95rem, 0.86rem + 0.4vw, 1.2rem);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-gold-soft);
+    max-width: 26rem;
+  }
+
+  .hero__copy {
+    font-size: var(--step-0);
+    color: var(--color-muted-on-dark);
+    max-width: 28rem;
+  }
+
+  .hero__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    margin-top: var(--space-xs);
+  }
+
+  .hero__visual {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 0 3px 3px;
+  }
+
+  .hero__supporting {
+    flex: 1;
+    display: flex;
+    gap: 3px;
+    min-height: 12rem;
+  }
+
+  .hero__tile {
+    position: relative;
+    margin: 0;
+    overflow: hidden;
+    background: var(--color-charcoal-soft);
+    border: 1px solid rgba(224, 176, 104, 0.16);
+    flex: 1;
+  }
+
+  .hero__tile--dominant {
+    flex: 2.1;
+  }
+
+  .hero__tile :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 700ms var(--ease-editorial);
+  }
+
+  .hero__tile--dominant :global(img) {
+    transition-duration: 1100ms;
+  }
+
+  .hero__tile:hover :global(img) {
+    transform: scale(1.025);
+  }
+
+  .hero__tile--dominant:hover :global(img) {
+    transform: scale(1.04);
+  }
+
+  .hero__tile figcaption {
+    position: absolute;
+    left: var(--space-2xs);
+    bottom: var(--space-2xs);
+  }
+
+  .hero__tile .tag {
+    display: inline-block;
+    padding: 0.35em 0.7em;
+    background: rgba(21, 17, 13, 0.55);
+    backdrop-filter: blur(2px);
+    color: var(--color-gold-soft);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  @media (min-width: 40em) {
+    .hero__message {
+      padding-block: var(--space-lg) var(--space-md);
+    }
+  }
+
+  @media (min-width: 62.5em) {
+    .hero__shell {
+      flex-direction: row;
+      align-items: stretch;
+      /* Bounded height on desktop/ultrawide: never shorter than 30rem,
+         never taller than 46rem, otherwise scales with viewport height.
+         This replaces a flat 100svh so the hero can't stretch to fill an
+         entire five-foot ultrawide monitor. */
+      min-height: clamp(30rem, 80vh, 46rem);
+    }
+
+    .hero__message {
+      flex: 0 0 auto;
+      width: min(34rem, 40vw);
+      justify-content: center;
+      padding: var(--space-lg) var(--space-lg) var(--space-lg) var(--container-padding);
+    }
+
+    .hero__visual {
+      flex-direction: row;
+      padding: 3px 3px 3px 0;
+    }
+
+    .hero__supporting {
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .hero__tile--dominant {
+      flex: 2.3;
+    }
+
+    .hero__supporting .hero__tile:nth-child(1) {
+      flex: 1.3;
+    }
+
+    .hero__supporting .hero__tile:nth-child(2) {
+      flex: 1;
+    }
+
+    .hero__supporting .hero__tile:nth-child(3) {
+      flex: 0.85;
+    }
+  }
+</style>

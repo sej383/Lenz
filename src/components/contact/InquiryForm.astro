@@ -1,0 +1,381 @@
+---
+// Submits to Netlify Forms — a zero-backend fit for this fully static
+// Astro build. Netlify's build-time bot scans the raw HTML for a <form>
+// carrying data-netlify="true" (present below) and provisions a matching
+// endpoint automatically; no server code or API key needed on our side.
+// netlify-honeypot names the existing "website" trap field so Netlify's
+// own spam filtering uses it too, on top of the client-side short-circuit
+// in the submit handler below.
+//
+// Still required after this ships, outside this repo (Netlify dashboard,
+// once the site is deployed there): turn on an email notification for the
+// "inquiry" form pointed at info@lenzphotos.com, and send one real test
+// submission to confirm it actually arrives. Don't treat this form as
+// launch-ready until that test has been done against the live deploy.
+---
+
+<div class="inquiry-form-wrap">
+  <h2>Commercial, Branding, Aerial &amp; General Inquiries</h2>
+  <p class="inquiry-form__lead">Tell us about your project and we'll follow up to plan next steps.</p>
+
+  <p class="inquiry-form__required-note">Fields marked <span aria-hidden="true">*</span> are required.</p>
+
+  <form novalidate id="inquiry-form" name="inquiry" method="POST" data-netlify="true" netlify-honeypot="website">
+    <input type="hidden" name="form-name" value="inquiry" />
+    <div class="form-field">
+      <label for="name">Name <span class="required-mark" aria-hidden="true">*</span></label>
+      <input type="text" id="name" name="name" required autocomplete="name" aria-describedby="name-error" />
+      <span class="form-error" id="name-error" role="alert"></span>
+    </div>
+
+    <div class="form-field">
+      <label for="company">Company / Business Name</label>
+      <input type="text" id="company" name="company" autocomplete="organization" />
+    </div>
+
+    <div class="form-field">
+      <label for="email">Email <span class="required-mark" aria-hidden="true">*</span></label>
+      <input type="email" id="email" name="email" required autocomplete="email" aria-describedby="email-error" />
+      <span class="form-error" id="email-error" role="alert"></span>
+    </div>
+
+    <div class="form-field">
+      <label for="phone">Phone</label>
+      <input type="tel" id="phone" name="phone" autocomplete="tel" />
+    </div>
+
+    <fieldset class="form-field">
+      <legend>Project Type <span class="required-mark" aria-hidden="true">*</span></legend>
+      <div class="radio-group">
+        <label class="radio-option">
+          <input type="radio" name="projectType" value="Commercial" required />
+          Commercial
+        </label>
+        <label class="radio-option">
+          <input type="radio" name="projectType" value="Branding" required />
+          Branding
+        </label>
+        <label class="radio-option">
+          <input type="radio" name="projectType" value="Aerial" required />
+          Aerial
+        </label>
+        <label class="radio-option">
+          <input type="radio" name="projectType" value="General Inquiry" required />
+          General Inquiry
+        </label>
+      </div>
+      <span class="form-error" id="projectType-error" role="alert"></span>
+    </fieldset>
+
+    <div class="form-field">
+      <label for="location">Project Location / City</label>
+      <input type="text" id="location" name="location" autocomplete="address-level2" />
+    </div>
+
+    <div class="form-field">
+      <label for="details">Project Details <span class="required-mark" aria-hidden="true">*</span></label>
+      <textarea id="details" name="details" rows="5" required aria-describedby="details-error"></textarea>
+      <span class="form-error" id="details-error" role="alert"></span>
+    </div>
+
+    <div class="honeypot" aria-hidden="true">
+      <label for="website">Leave this field blank</label>
+      <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+    </div>
+
+    <p class="inquiry-form__submit-error" id="inquiry-submit-error" role="alert" hidden>
+      Something went wrong sending your message. Please try again, or email us directly at{" "}
+      <a href="mailto:info@lenzphotos.com">info@lenzphotos.com</a>.
+    </p>
+
+    <button type="submit" class="btn btn-primary">Send Inquiry</button>
+  </form>
+
+  <div class="inquiry-form__success" id="inquiry-success" role="status" tabindex="-1" hidden>
+    <h3>Message Received</h3>
+    <p>Thanks for reaching out — we'll follow up soon to plan next steps.</p>
+  </div>
+</div>
+
+<script>
+  const form = document.getElementById("inquiry-form") as HTMLFormElement | null;
+  const successPanel = document.getElementById("inquiry-success");
+
+  if (form && successPanel) {
+    const requiredFields = [
+      { el: form.querySelector<HTMLInputElement>("#name"), message: "Please enter your name." },
+      { el: form.querySelector<HTMLInputElement>("#email"), message: "Please enter a valid email address." },
+      { el: form.querySelector<HTMLTextAreaElement>("#details"), message: "Please add a few details about your project." },
+    ];
+
+    const clearFieldError = (input: HTMLElement, errorId: string) => {
+      input.removeAttribute("aria-invalid");
+      const errorEl = document.getElementById(errorId);
+      if (errorEl) errorEl.textContent = "";
+    };
+
+    requiredFields.forEach(({ el }) => {
+      if (!el) return;
+      const errorId = `${el.id}-error`;
+      el.addEventListener("input", () => {
+        if (el.validity.valid) clearFieldError(el, errorId);
+      });
+    });
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      let firstInvalid: HTMLElement | null = null;
+
+      requiredFields.forEach(({ el, message }) => {
+        if (!el) return;
+        const errorId = `${el.id}-error`;
+        if (!el.validity.valid) {
+          el.setAttribute("aria-invalid", "true");
+          const errorEl = document.getElementById(errorId);
+          if (errorEl) errorEl.textContent = message;
+          if (!firstInvalid) firstInvalid = el;
+        } else {
+          clearFieldError(el, errorId);
+        }
+      });
+
+      const projectTypeChecked = form.querySelector<HTMLInputElement>('input[name="projectType"]:checked');
+      const projectTypeError = document.getElementById("projectType-error");
+      if (!projectTypeChecked) {
+        if (projectTypeError) projectTypeError.textContent = "Please select a project type.";
+        if (!firstInvalid) firstInvalid = form.querySelector('input[name="projectType"]');
+      } else if (projectTypeError) {
+        projectTypeError.textContent = "";
+      }
+
+      if (firstInvalid) {
+        (firstInvalid as HTMLElement).focus();
+        return;
+      }
+
+      const submitErrorEl = document.getElementById("inquiry-submit-error");
+      if (submitErrorEl) submitErrorEl.hidden = true;
+
+      // Honeypot: a filled hidden field means a bot filled every input it
+      // could find. Real inquiries never reach here with this populated.
+      // Never actually send bot-filled submissions to Netlify — but show
+      // the same success UI a genuine sender would get, so a spam script
+      // gets no signal that it was caught.
+      const honeypot = form.querySelector<HTMLInputElement>("#website");
+      const isLikelyBot = !!honeypot?.value;
+
+      if (isLikelyBot) {
+        form.hidden = true;
+        successPanel.hidden = false;
+        successPanel.focus();
+        return;
+      }
+
+      const submitButton = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = "Sending…";
+      }
+
+      const body = new URLSearchParams();
+      new FormData(form).forEach((value, key) => body.append(key, String(value)));
+
+      fetch("/contact/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: body.toString(),
+      })
+        .then((response) => {
+          if (!response.ok) throw new Error(`Form submission failed: ${response.status}`);
+          form.hidden = true;
+          successPanel.hidden = false;
+          successPanel.focus();
+        })
+        .catch(() => {
+          if (submitErrorEl) submitErrorEl.hidden = false;
+        })
+        .finally(() => {
+          if (submitButton) {
+            submitButton.disabled = false;
+            submitButton.textContent = "Send Inquiry";
+          }
+        });
+    });
+  }
+</script>
+
+<style>
+  .inquiry-form-wrap h2 {
+    font-size: var(--step-2);
+    font-weight: 500;
+    color: var(--color-charcoal);
+  }
+
+  .inquiry-form__lead {
+    margin-top: 0.4em;
+    color: var(--color-muted);
+    max-width: 32rem;
+  }
+
+  .inquiry-form__required-note {
+    margin-top: var(--space-sm);
+    font-size: var(--step--1);
+    color: var(--color-muted);
+  }
+
+  #inquiry-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    margin-top: var(--space-sm);
+    max-width: 34rem;
+  }
+
+  #inquiry-form[hidden] {
+    display: none;
+  }
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4em;
+    border: 0;
+    padding: 0;
+    margin: 0;
+  }
+
+  .form-field > label,
+  .form-field > legend {
+    font-family: var(--font-body);
+    font-size: var(--step--1);
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    color: var(--color-charcoal);
+  }
+
+  .required-mark {
+    /* --color-bronze only reaches ~3:1 against the cream background here —
+       fine for the input border below (UI components need 3:1), but this
+       is small text, which needs 4.5:1. Using a darker rust instead. */
+    color: #7a3b1a;
+  }
+
+  .form-field input[type="text"],
+  .form-field input[type="email"],
+  .form-field input[type="tel"],
+  .form-field textarea {
+    font-family: var(--font-body);
+    font-size: var(--step-0);
+    color: var(--color-charcoal);
+    background: var(--color-cream);
+    border: 1px solid rgba(58, 47, 38, 0.3);
+    border-radius: var(--radius-sm);
+    padding: 0.75em 0.9em;
+    min-height: 3em;
+  }
+
+  .form-field textarea {
+    min-height: 8em;
+    resize: vertical;
+  }
+
+  .form-field input:focus-visible,
+  .form-field textarea:focus-visible,
+  .radio-option input:focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 2px;
+  }
+
+  .form-field input[aria-invalid="true"],
+  .form-field textarea[aria-invalid="true"] {
+    border-color: var(--color-bronze);
+  }
+
+  .form-error {
+    font-size: var(--step--1);
+    font-weight: 600;
+    color: #7a3b1a;
+    min-height: 1.2em;
+  }
+
+  .form-error:not(:empty)::before {
+    content: "Error: ";
+  }
+
+  .radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6em;
+    margin-top: 0.3em;
+  }
+
+  .radio-option {
+    display: flex;
+    align-items: center;
+    gap: 0.6em;
+    font-family: var(--font-body);
+    font-size: var(--step-0);
+    font-weight: 400;
+    color: var(--color-charcoal);
+  }
+
+  .radio-option input {
+    width: 1.15em;
+    height: 1.15em;
+    accent-color: var(--color-gold);
+  }
+
+  .honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .inquiry-form__submit-error {
+    padding: 0.85em 1.1em;
+    border: 1px solid rgba(122, 59, 26, 0.3);
+    background: rgba(122, 59, 26, 0.08);
+    font-size: var(--step--1);
+    font-weight: 600;
+    color: #7a3b1a;
+  }
+
+  .inquiry-form__submit-error a {
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+  }
+
+  #inquiry-form .btn {
+    align-self: flex-start;
+    margin-top: var(--space-2xs);
+  }
+
+  .inquiry-form__success {
+    margin-top: var(--space-sm);
+    max-width: 34rem;
+    padding: var(--space-sm);
+    border: 1px solid rgba(224, 176, 104, 0.35);
+    background: var(--color-cream);
+  }
+
+  .inquiry-form__success h3 {
+    font-size: var(--step-1);
+    color: var(--color-charcoal);
+  }
+
+  .inquiry-form__success p {
+    margin-top: 0.5em;
+    color: var(--color-muted);
+  }
+
+  @media (min-width: 40em) {
+    .radio-group {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 1.25em;
+    }
+  }
+</style>

@@ -1,0 +1,55 @@
+---
+// Deliberately its own full-width, strongly-differentiated block, not part
+// of the form's visual system — the goal is for a Real Estate visitor to
+// stop here and never scroll into the inquiry form at all.
+import { siteConfig } from "../../lib/site-config";
+---
+
+<section class="section section--dark surface-leather real-estate-callout">
+  <div class="container real-estate-callout__inner">
+    <div class="real-estate-callout__text">
+      <p class="eyebrow">Real Estate</p>
+      <h2>Booking a Real Estate Listing?</h2>
+      <p>
+        Real estate listing photography and aerial coverage are scheduled directly online — no
+        form needed. Pick a time and we'll take it from there.
+      </p>
+    </div>
+    <a class="btn btn-primary" href={siteConfig.bookRealEstateUrl} target="_blank" rel="noopener noreferrer">
+      Book Real Estate
+      <span class="visually-hidden">(opens the HDPhotoHub booking site in a new tab)</span>
+    </a>
+  </div>
+</section>
+
+<style>
+  .real-estate-callout__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+  }
+
+  .real-estate-callout__text h2 {
+    margin-top: 0.2em;
+  }
+
+  .real-estate-callout__text p:not(.eyebrow) {
+    color: var(--color-muted-on-dark);
+    max-width: 34rem;
+    margin-top: 0.4em;
+  }
+
+  @media (min-width: 50em) {
+    .real-estate-callout__inner {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-lg);
+    }
+
+    .real-estate-callout__inner .btn {
+      flex-shrink: 0;
+    }
+  }
+</style>

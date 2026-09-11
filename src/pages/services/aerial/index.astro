@@ -1,0 +1,37 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import Header from "../../../components/Header.astro";
+import Footer from "../../../components/Footer.astro";
+import { siteConfig } from "../../../lib/site-config";
+import AerialHero from "../../../components/aerial/AerialHero.astro";
+import AerialIntro from "../../../components/aerial/AerialIntro.astro";
+import Capabilities from "../../../components/aerial/Capabilities.astro";
+import AerialWork from "../../../components/aerial/AerialWork.astro";
+import ServiceCta from "../../../components/ServiceCta.astro";
+---
+
+<BaseLayout
+  title="Aerial Photography & Video — LENZ"
+  description="FAA Part 107 licensed aerial photography and video for construction, land, commercial properties, agriculture, and specialty projects across western Iowa, the Omaha/Council Bluffs metro, and eastern Nebraska."
+>
+  <Header />
+  <main id="main-content">
+    <AerialHero />
+    <AerialIntro />
+    <Capabilities />
+    <AerialWork />
+    <ServiceCta
+      heading="Have an Aerial Project in Mind?"
+      copy="Tell us about the project — construction progress, land, a commercial property, or something more specialized — and we'll follow up to plan the coverage."
+    >
+      <Fragment slot="note">
+        Need aerial photography for a real estate listing?{" "}
+        <a href={siteConfig.bookRealEstateUrl} target="_blank" rel="noopener noreferrer">
+          Book Real Estate
+          <span class="visually-hidden">(opens the HDPhotoHub booking site in a new tab)</span>
+        </a>
+      </Fragment>
+    </ServiceCta>
+  </main>
+  <Footer />
+</BaseLayout>

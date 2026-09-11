@@ -1,0 +1,299 @@
+---
+import { Image } from "astro:assets";
+import logo from "../assets/logo/lenz-wordmark-on-dark.png";
+import { primaryNav, siteConfig } from "../lib/site-config";
+---
+
+<header class="site-header">
+  <div class="site-header__bar container">
+    <a href="/" class="site-header__logo" aria-label={`${siteConfig.name} — home`}>
+      <Image src={logo} alt="" role="presentation" width={280} loading="eager" />
+    </a>
+
+    <nav class="site-header__nav" aria-label="Primary">
+      <ul>
+        {
+          primaryNav.map((link) => (
+            <li>
+              <a href={link.href}>{link.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="site-header__actions">
+      <a
+        class="btn btn-primary site-header__book"
+        href={siteConfig.bookRealEstateUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Book Real Estate
+        <span class="visually-hidden">(opens the HDPhotoHub booking site in a new tab)</span>
+      </a>
+
+      <button
+        class="site-header__toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+        id="mobile-nav-toggle"
+      >
+        <span class="visually-hidden">Menu</span>
+        <span class="site-header__toggle-bars" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="mobile-nav" id="mobile-nav" data-state="closed">
+    <nav aria-label="Mobile">
+      <ul>
+        {
+          primaryNav.map((link) => (
+            <li>
+              <a href={link.href}>{link.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    <a
+      class="btn btn-primary mobile-nav__book"
+      href={siteConfig.bookRealEstateUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Book Real Estate
+      <span class="visually-hidden">(opens the HDPhotoHub booking site in a new tab)</span>
+    </a>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--color-charcoal);
+    border-bottom: var(--border-width) solid var(--color-hairline);
+  }
+
+  .site-header__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    padding-block: var(--space-2xs);
+  }
+
+  .site-header__logo {
+    display: block;
+    flex-shrink: 0;
+  }
+
+  .site-header__logo :global(img) {
+    width: clamp(6rem, 5.2rem + 3.5vw, 8.5rem);
+    height: auto;
+  }
+
+  .site-header__nav {
+    display: none;
+  }
+
+  .site-header__nav ul {
+    display: flex;
+    align-items: center;
+    gap: clamp(1.5rem, 1.3rem + 0.9vw, 2.1rem);
+  }
+
+  .site-header__nav a {
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--color-offwhite);
+    position: relative;
+    padding-block: 0.4em;
+    transition: color var(--duration-base) var(--ease-editorial);
+  }
+
+  .site-header__nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 100%;
+    bottom: 0;
+    height: 1px;
+    background: var(--color-gold);
+    transition: right var(--duration-base) var(--ease-editorial);
+  }
+
+  .site-header__nav a:hover,
+  .site-header__nav a:focus-visible {
+    color: var(--color-gold-soft);
+  }
+
+  .site-header__nav a:hover::after,
+  .site-header__nav a:focus-visible::after {
+    right: 0;
+  }
+
+  .site-header__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .site-header__book {
+    padding: 0.75em 1.4em;
+    font-size: clamp(0.72rem, 0.68rem + 0.15vw, 0.8rem);
+  }
+
+  .site-header__toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    flex-shrink: 0;
+  }
+
+  .site-header__toggle-bars,
+  .site-header__toggle-bars::before,
+  .site-header__toggle-bars::after {
+    display: block;
+    width: 1.5rem;
+    height: 1px;
+    background: var(--color-offwhite);
+    transition: transform var(--duration-base) var(--ease-editorial),
+      opacity var(--duration-base) var(--ease-editorial);
+  }
+
+  .site-header__toggle-bars {
+    position: relative;
+  }
+
+  .site-header__toggle-bars::before,
+  .site-header__toggle-bars::after {
+    content: "";
+    position: absolute;
+    left: 0;
+  }
+
+  .site-header__toggle-bars::before {
+    top: -7px;
+  }
+
+  .site-header__toggle-bars::after {
+    top: 7px;
+  }
+
+  .site-header__toggle[aria-expanded="true"] .site-header__toggle-bars {
+    background: transparent;
+  }
+
+  .site-header__toggle[aria-expanded="true"] .site-header__toggle-bars::before {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .site-header__toggle[aria-expanded="true"] .site-header__toggle-bars::after {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  .mobile-nav {
+    position: fixed;
+    inset: 0;
+    top: 0;
+    background: var(--color-charcoal);
+    color: var(--color-offwhite);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-lg);
+    padding: var(--space-lg) var(--container-padding);
+    transform: translateY(-100%);
+    transition: transform var(--duration-base) var(--ease-editorial);
+    z-index: 40;
+  }
+
+  .mobile-nav[data-state="open"] {
+    transform: translateY(0);
+  }
+
+  .mobile-nav ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+    text-align: center;
+  }
+
+  .mobile-nav a {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--step-1);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-offwhite);
+  }
+
+  .mobile-nav a:hover,
+  .mobile-nav a:focus-visible {
+    color: var(--color-gold-soft);
+  }
+
+  @media (min-width: 62.5em) {
+    .site-header__nav {
+      display: block;
+    }
+
+    .site-header__toggle {
+      display: none;
+    }
+
+    .mobile-nav {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const toggle = document.getElementById("mobile-nav-toggle");
+  const nav = document.getElementById("mobile-nav");
+
+  if (toggle && nav) {
+    const closeNav = () => {
+      toggle.setAttribute("aria-expanded", "false");
+      nav.dataset.state = "closed";
+      document.body.style.overflow = "";
+    };
+
+    const openNav = () => {
+      toggle.setAttribute("aria-expanded", "true");
+      nav.dataset.state = "open";
+      document.body.style.overflow = "hidden";
+    };
+
+    toggle.addEventListener("click", () => {
+      const isOpen = toggle.getAttribute("aria-expanded") === "true";
+      isOpen ? closeNav() : openNav();
+    });
+
+    nav.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", closeNav);
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeNav();
+    });
+
+    // If the viewport is resized past the mobile breakpoint while the menu
+    // is open, reset state so it doesn't get stuck open behind the desktop nav.
+    const desktopQuery = window.matchMedia("(min-width: 62.5em)");
+    desktopQuery.addEventListener("change", (event) => {
+      if (event.matches) closeNav();
+    });
+  }
+</script>

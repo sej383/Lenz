@@ -1,0 +1,32 @@
+# LENZ — legacy URL redirects (throughthelenzphoto.com / lenzphotos.com, Wix)
+# Generated from FULL-SITE-AUDIT.md section 4. Netlify _redirects syntax: source destination code
+# Every entry here is a permanent (301) redirect. Rows not listed (old Wix system pages with no
+# real content — /category/all-products, /my-addresses, /cart-page) are intentionally NOT redirected
+# per the audit's recommendation and are left to 404.
+
+/about                          /about/                          301
+/contact                        /contact/                        301
+/blog                           /blog/                            301
+
+# Migrated blog posts — old /post/ prefix to the new /blog/ collection. Slugs preserved exactly.
+/post/commercial-photography-that-elevates-your-brand                                  /blog/commercial-photography-that-elevates-your-brand/                                  301
+/post/the-power-of-drone-photography-from-real-estate-to-everyday-moments              /blog/the-power-of-drone-photography-from-real-estate-to-everyday-moments/              301
+/post/why-professional-branding-photos-matter-for-your-business                        /blog/why-professional-branding-photos-matter-for-your-business/                        301
+
+# Old service/portfolio pages, retargeted to their closest current equivalent.
+/real-estate-portfolio          /services/real-estate/           301
+/drone-photography              /services/aerial/                301
+/branding-photography           /services/branding/              301
+/photo-albums                   /services/commercial/            301
+/real-estate-photo-services     /services/real-estate/           301
+
+# No current on-site equivalent for the Home Prep Checklist content (see
+# FULL-SITE-AUDIT.md section 4) — redirected to the closest relevant page
+# rather than left to 404, per "never retire an indexed URL without a
+# documented redirect." Confirmed target.
+/real-estate-photo-checklist    /services/real-estate/                                  301
+
+# Old booking-instructions page — sends straight to the real HDPhotoHub
+# ordering flow (same URL as every "Book Real Estate" button site-wide,
+# see siteConfig.bookRealEstateUrl) rather than an on-site page.
+/book-now                       https://throughthelenzphotography.hd.pics/order         301

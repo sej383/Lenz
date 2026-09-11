@@ -1,0 +1,107 @@
+---
+// Full-width cinematic panels instead of Commercial/Branding/Real Estate's
+// alternating side-by-side rows — scale and perspective are the whole
+// point of this page, so each image gets to be big rather than sharing
+// space with text.
+import { Image } from "astro:assets";
+import constructionPhoto from "../../assets/photos/svc-aerial-foundation-progress.jpg";
+import landPhoto from "../../assets/photos/svc-aerial-parcel-overlay.jpg";
+import specialtyPhoto from "../../assets/photos/svc-aerial-windmill.jpg";
+
+const panels = [
+  {
+    key: "construction",
+    label: "Construction & Development Progress",
+    copy: "Aerial photography and video for construction milestones, development sites, completed projects, and progress documentation.",
+    image: constructionPhoto,
+    alt: "Aerial view of a poured foundation for a new home under construction near a lake",
+  },
+  {
+    key: "land",
+    label: "Land, Parcels & Property Context",
+    copy: "Acreages, farmland, development parcels, and large properties — aerial imagery that helps communicate scale, boundaries, and surrounding context. Parcel and boundary overlays are visual presentation tools based on information supplied by the client, not surveying, engineering, or legal boundary determination.",
+    image: landPhoto,
+    alt: "Aerial view of a residential development with numbered lot lines overlaid on the land",
+  },
+  {
+    key: "specialty",
+    label: "Specialty & Landmark Coverage",
+    copy: "Aerial imagery for landmarks, tourism, community projects, events, agriculture, and other subjects where a ground-level photograph can't show the full story.",
+    image: specialtyPhoto,
+    alt: "Close aerial view of an ornate red Dutch-style windmill landmark",
+  },
+];
+---
+
+<section class="section section--dark surface-leather-tall capabilities">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">What We Cover</p>
+      <h2>Three Areas of Aerial Work</h2>
+    </div>
+
+    <div class="capabilities__panels">
+      {
+        panels.map((panel) => (
+          <article class="capability-panel">
+            <div class="capability-panel__media">
+              <Image
+                src={panel.image}
+                alt={panel.alt}
+                widths={[700, 1100, 1500, 1900]}
+                width={1900}
+                sizes="100vw"
+              />
+            </div>
+            <div class="capability-panel__body">
+              <span class="eyebrow">{panel.label}</span>
+              <p>{panel.copy}</p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .capabilities__panels {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .capability-panel__media {
+    aspect-ratio: 2 / 1;
+    overflow: hidden;
+    border: 1px solid rgba(224, 176, 104, 0.16);
+  }
+
+  .capability-panel__media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .capability-panel__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    max-width: 42rem;
+    margin-top: var(--space-sm);
+  }
+
+  .capability-panel__body .eyebrow {
+    color: var(--color-gold-soft);
+  }
+
+  .capability-panel__body p {
+    color: var(--color-muted-on-dark);
+  }
+
+  @media (min-width: 40em) {
+    .capability-panel__media {
+      aspect-ratio: 12 / 5;
+    }
+  }
+</style>

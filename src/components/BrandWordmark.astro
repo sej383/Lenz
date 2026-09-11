@@ -1,0 +1,44 @@
+---
+// Inline LENZ wordmark for use inside display headlines, e.g.:
+//   <h2>Four Ways to Put <BrandWordmark /> Behind the Camera</h2>
+//
+// Renders the actual logo artwork (not typeset text) sized and
+// baseline-aligned to sit inline with surrounding headline text. The
+// image's alt text ("LENZ") is picked up as part of the heading's
+// accessible name automatically — no extra markup needed for screen
+// readers to read the heading naturally.
+//
+// Use background="dark" on charcoal sections so the wordmark's middle
+// bar (black in the source logo) stays visible instead of blending into
+// a near-black background.
+import { Image } from "astro:assets";
+import wordmarkLight from "../assets/logo/lenz-wordmark.png";
+import wordmarkDark from "../assets/logo/lenz-wordmark-on-dark.png";
+
+interface Props {
+  background?: "light" | "dark";
+}
+
+const { background = "light" } = Astro.props;
+const src = background === "dark" ? wordmarkDark : wordmarkLight;
+---
+
+<span class="brand-wordmark">
+  <Image src={src} alt="LENZ" width={480} />
+</span>
+
+<style>
+  .brand-wordmark {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .brand-wordmark :global(img) {
+    display: block;
+    height: 0.82em;
+    width: auto;
+    /* Optical nudge so the wordmark's bottom edge lands on the
+       surrounding text's baseline instead of floating above it. */
+    transform: translateY(0.06em);
+  }
+</style>

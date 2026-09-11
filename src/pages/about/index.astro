@@ -1,0 +1,25 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import AboutHero from "../../components/about/AboutHero.astro";
+import AboutStory from "../../components/about/AboutStory.astro";
+import WorkingWithLenz from "../../components/about/WorkingWithLenz.astro";
+import Credentials from "../../components/about/Credentials.astro";
+import AboutClosing from "../../components/about/AboutClosing.astro";
+---
+
+<BaseLayout
+  title="About — LENZ"
+  description="Sarah Lenz has spent more than twenty years behind a camera and personally owns and runs LENZ — a hands-on photography and aerial media studio serving western Iowa, the Omaha/Council Bluffs metro, and eastern Nebraska."
+>
+  <Header />
+  <main id="main-content">
+    <AboutHero />
+    <AboutStory />
+    <WorkingWithLenz />
+    <Credentials />
+    <AboutClosing />
+  </main>
+  <Footer />
+</BaseLayout>

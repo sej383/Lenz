@@ -1,0 +1,83 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import ServicesOverview from "../../components/services/ServicesOverview.astro";
+---
+
+<BaseLayout
+  title="Services — LENZ"
+  description="Real estate, commercial, branding, and aerial photography services from LENZ, serving western Iowa, the Omaha/Council Bluffs metro, and eastern Nebraska."
+>
+  <Header />
+  <main id="main-content">
+    <section class="section section--light services-intro">
+      <div class="container">
+        <p class="eyebrow">Services</p>
+        <h1 class="services-intro__heading">What We Do</h1>
+        <p class="services-intro__copy">
+          Four areas of focus, one consistent standard of work. Explore a service below to see the
+          full approach, or start a project if you already know what you need.
+        </p>
+      </div>
+    </section>
+
+    <section class="section section--light services-grid-section">
+      <div class="container">
+        <ServicesOverview />
+      </div>
+    </section>
+
+    <section class="section section--light services-closing">
+      <div class="container services-closing__inner">
+        <p>
+          Not sure where your project fits? <a href="/contact/">Start a Project</a>
+        </p>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .services-intro {
+    padding-bottom: 0;
+  }
+
+  .services-intro__heading {
+    font-size: var(--step-3);
+    font-weight: 500;
+    margin-top: 0.35em;
+    color: var(--color-charcoal);
+  }
+
+  .services-intro__copy {
+    margin-top: var(--space-2xs);
+    font-size: var(--step-0);
+    color: var(--color-muted);
+    max-width: 40rem;
+  }
+
+  .services-grid-section {
+    padding-top: var(--space-md);
+  }
+
+  .services-closing {
+    padding-top: 0;
+  }
+
+  .services-closing__inner {
+    max-width: 42rem;
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--color-hairline-on-cream);
+    font-size: var(--step-0);
+    color: var(--color-charcoal);
+  }
+
+  .services-closing__inner a {
+    color: var(--color-bronze);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+  }
+</style>

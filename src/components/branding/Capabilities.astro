@@ -1,0 +1,129 @@
+---
+// Three alternating rows — three, not four, because that's what the
+// current Branding asset library honestly supports. Same row pattern as
+// Commercial's Capabilities for cross-page consistency.
+import { Image } from "astro:assets";
+import peoplePhoto from "../../assets/photos/work-branding-fitness.jpg";
+import productPhoto from "../../assets/photos/svc-branding-coffee.jpg";
+import libraryPhoto from "../../assets/photos/svc-branding-empathyworks.jpg";
+
+const rows = [
+  {
+    key: "people",
+    label: "People & Business Storytelling",
+    copy: "People at work, service providers, teams, portraits, and authentic imagery showing what a business does and who is behind it.",
+    image: peoplePhoto,
+    alt: "A fitness portrait captured mid-stretch in a home gym",
+    objectPosition: "center 18%",
+  },
+  {
+    key: "product",
+    label: "Product & Detail Photography",
+    copy: "Products, merchandise, and carefully composed detail imagery for websites, e-commerce, advertising, print, and marketing.",
+    image: productPhoto,
+    alt: "Close-up product photography of a burlap coffee sack",
+    objectPosition: "center",
+  },
+  {
+    key: "library",
+    label: "Marketing Content & Brand Libraries",
+    copy: "A versatile library of custom imagery businesses can reuse across websites, social media, campaigns, email, and ongoing marketing — rather than relying on stock photography.",
+    image: libraryPhoto,
+    alt: "Studio product photography of Empathy Works craft kit bags on a white background",
+    objectPosition: "center",
+  },
+];
+---
+
+<section class="section section--dark surface-leather-tall capabilities">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">What We Cover</p>
+      <h2>Three Areas of Branding Work</h2>
+    </div>
+
+    <div class="capabilities__rows">
+      {
+        rows.map((row, i) => (
+          <article class:list={["capability-row", { "capability-row--reverse": i % 2 === 1 }]}>
+            <div class="capability-row__media">
+              <Image
+                src={row.image}
+                alt={row.alt}
+                widths={[500, 800, 1100]}
+                width={1100}
+                sizes="(min-width: 55em) 50vw, 100vw"
+                style={`object-position: ${row.objectPosition};`}
+              />
+            </div>
+            <div class="capability-row__body">
+              <span class="eyebrow">{row.label}</span>
+              <p>{row.copy}</p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .capabilities__rows {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .capability-row {
+    display: grid;
+    gap: var(--space-sm);
+    align-items: start;
+  }
+
+  .capability-row__media {
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    border: 1px solid rgba(224, 176, 104, 0.16);
+  }
+
+  .capability-row__media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .capability-row__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    max-width: 30rem;
+    padding-top: 0.35em;
+  }
+
+  .capability-row__body .eyebrow {
+    color: var(--color-gold-soft);
+  }
+
+  .capability-row__body p {
+    color: var(--color-muted-on-dark);
+  }
+
+  @media (min-width: 55em) {
+    .capability-row {
+      grid-template-columns: 1.3fr 1fr;
+    }
+
+    .capability-row--reverse {
+      grid-template-columns: 1fr 1.3fr;
+    }
+
+    .capability-row--reverse .capability-row__media {
+      order: 2;
+    }
+
+    .capability-row--reverse .capability-row__body {
+      order: 1;
+      justify-self: end;
+    }
+  }
+</style>

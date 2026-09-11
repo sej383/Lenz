@@ -1,0 +1,110 @@
+---
+// Five images — four landscape, one portrait (the fitness portrait). Rather
+// than force an uneven 3-column grid (which would leave the last row
+// incomplete), the portrait image anchors a tall tile and the four
+// landscape images fill an even 2x2 beside it. Deliberately not a clone of
+// Commercial's uniform 4:3 grid — this mix of orientations asked for a
+// different shape.
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
+
+const entries = await getCollection("work", ({ data }) => data.featuredOnServicePages.includes("branding"));
+const sorted = entries.sort((a, b) => a.data.featuredOrder - b.data.featuredOrder).map((entry) => entry.data);
+
+const tall = sorted.find((item) => item.title === "Home Gym Portrait");
+const rest = sorted.filter((item) => item.title !== "Home Gym Portrait");
+---
+
+<section class="section section--light section--sand branding-work">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Selected Branding Work</p>
+      <h2>A Closer Look</h2>
+    </div>
+
+    <div class="branding-work__grid">
+      {
+        tall && (
+          <figure class="branding-work__tile branding-work__tile--tall">
+            <Image
+              src={tall.image}
+              alt={tall.imageAlt}
+              widths={[500, 800, 1100]}
+              width={1100}
+              sizes="(min-width: 55em) 33vw, 100vw"
+              style={`object-position: ${tall.objectPosition};`}
+            />
+          </figure>
+        )
+      }
+      {
+        rest.map((item) => (
+          <figure class="branding-work__tile">
+            <Image
+              src={item.image}
+              alt={item.imageAlt}
+              widths={[400, 700, 1000]}
+              width={1000}
+              sizes="(min-width: 55em) 33vw, 50vw"
+              style={`object-position: ${item.objectPosition};`}
+            />
+          </figure>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .branding-work__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3px;
+  }
+
+  .branding-work__tile {
+    position: relative;
+    margin: 0;
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    background: var(--color-charcoal-soft);
+  }
+
+  .branding-work__tile--tall {
+    aspect-ratio: 4 / 5;
+  }
+
+  .branding-work__tile :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 900ms var(--ease-editorial);
+  }
+
+  .branding-work__tile:hover :global(img) {
+    transform: scale(1.035);
+  }
+
+  @media (min-width: 40em) {
+    .branding-work__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 55em) {
+    .branding-work__grid {
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: 1fr;
+      aspect-ratio: 2 / 1;
+    }
+
+    .branding-work__tile {
+      aspect-ratio: auto;
+    }
+
+    .branding-work__tile--tall {
+      grid-row: span 2;
+      aspect-ratio: auto;
+    }
+  }
+</style>

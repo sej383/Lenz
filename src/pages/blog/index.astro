@@ -1,0 +1,175 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("blog")).sort((a, b) => {
+  const aTime = a.data.publishDate?.getTime() ?? 0;
+  const bTime = b.data.publishDate?.getTime() ?? 0;
+  return bTime - aTime;
+});
+
+// timeZone: "UTC" is deliberate — publishDate is authored as a plain
+// calendar date with no time-of-day meaning, so it's stored as UTC
+// midnight. Formatting in the viewer's local zone would shift it back a
+// day for anyone west of UTC (confirmed: was showing Feb 20 for a Feb 21
+// post). Displaying in UTC keeps the date the same for every viewer.
+const formatDate = (date: Date) => date.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric", timeZone: "UTC" });
+---
+
+<BaseLayout
+  title="Blog — LENZ"
+  description="Notes on real estate, commercial, branding, and aerial photography from LENZ, serving western Iowa, the Omaha/Council Bluffs metro, and eastern Nebraska."
+>
+  <Header />
+  <main id="main-content">
+    <section class="section section--light blog-index-intro">
+      <div class="container">
+        <p class="eyebrow">Blog</p>
+        <h1 class="blog-index-intro__heading">The Bigger Picture</h1>
+        <p class="blog-index-intro__copy">
+          A closer look at the projects, ideas, and perspective behind LENZ.
+        </p>
+      </div>
+    </section>
+
+    <section class="section section--light section--sand blog-index">
+      <div class="container">
+        <div class="blog-index__grid">
+          {
+            posts.map((post) => (
+              <a class="blog-card" href={`/blog/${post.id}/`}>
+                <div class="blog-card__media">
+                  <Image
+                    src={post.data.image}
+                    alt={post.data.imageAlt}
+                    widths={[400, 650, 900]}
+                    width={900}
+                    sizes="(min-width: 62.5em) 30vw, (min-width: 40em) 45vw, 90vw"
+                  />
+                  {post.data.isPlaceholder && <span class="blog-card__sample">Sample Post</span>}
+                </div>
+                <span class="eyebrow">{post.data.category}</span>
+                <h2>{post.data.title}</h2>
+                <p class="blog-card__byline">
+                  {post.data.author}
+                  {post.data.publishDate && (
+                    <>
+                      {" "}
+                      · <time datetime={post.data.publishDate.toISOString()}>{formatDate(post.data.publishDate)}</time>
+                    </>
+                  )}
+                </p>
+                <p class="blog-card__excerpt">{post.data.excerpt}</p>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .blog-index-intro {
+    padding-bottom: 0;
+  }
+
+  .blog-index-intro__heading {
+    font-size: var(--step-3);
+    font-weight: 500;
+    margin-top: 0.35em;
+    color: var(--color-charcoal);
+  }
+
+  .blog-index-intro__copy {
+    margin-top: var(--space-2xs);
+    font-size: var(--step-0);
+    color: var(--color-muted);
+    max-width: 36rem;
+  }
+
+  .blog-index__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
+  .blog-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4em;
+    color: var(--color-charcoal);
+  }
+
+  .blog-card__media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    margin-bottom: var(--space-2xs);
+    background: var(--color-charcoal-soft);
+  }
+
+  .blog-card__media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 900ms var(--ease-editorial);
+  }
+
+  .blog-card:hover .blog-card__media :global(img),
+  .blog-card:focus-visible .blog-card__media :global(img) {
+    transform: scale(1.03);
+  }
+
+  .blog-card:focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+  }
+
+  .blog-card__sample {
+    position: absolute;
+    top: var(--space-2xs);
+    right: var(--space-2xs);
+    background: var(--color-charcoal);
+    color: var(--color-gold-soft);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.3em 0.6em;
+  }
+
+  .blog-card h2 {
+    font-size: var(--step-1);
+    font-weight: 500;
+  }
+
+  .blog-card__byline {
+    font-size: var(--step--1);
+    color: var(--color-muted);
+  }
+
+  .blog-card__excerpt {
+    color: var(--color-muted);
+    font-size: var(--step--1);
+  }
+
+  @media (min-width: 40em) {
+    .blog-index__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-md);
+    }
+  }
+
+  @media (min-width: 62.5em) {
+    .blog-index__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

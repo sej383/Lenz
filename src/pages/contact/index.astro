@@ -1,0 +1,45 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import ContactIntro from "../../components/contact/ContactIntro.astro";
+import RealEstateCallout from "../../components/contact/RealEstateCallout.astro";
+import InquiryForm from "../../components/contact/InquiryForm.astro";
+import ContactInfo from "../../components/contact/ContactInfo.astro";
+---
+
+<BaseLayout
+  title="Contact — LENZ"
+  description="Contact LENZ for commercial, branding, and aerial photography inquiries. Real estate listing photography books directly online."
+>
+  <Header />
+  <main id="main-content">
+    <ContactIntro />
+    <RealEstateCallout />
+    <section class="section section--light section--sand contact-main">
+      <div class="container contact-main__grid">
+        <InquiryForm />
+        <ContactInfo />
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .contact-main {
+    padding-top: var(--space-lg);
+  }
+
+  .contact-main__grid {
+    display: grid;
+    gap: var(--space-xl);
+  }
+
+  @media (min-width: 60em) {
+    .contact-main__grid {
+      grid-template-columns: 1fr 20rem;
+      align-items: start;
+    }
+  }
+</style>

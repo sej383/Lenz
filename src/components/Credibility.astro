@@ -1,0 +1,82 @@
+---
+import { siteConfig } from "../lib/site-config";
+
+const points = [
+  "20+ years of photography experience",
+  "FAA Part 107 licensed & insured",
+  "Ground and aerial photography, one studio",
+  `Based in ${siteConfig.baseLocation}, serving ${siteConfig.serviceArea}`,
+];
+---
+
+<section class="section section--light section--sand credibility">
+  <div class="container credibility__inner">
+    <div class="section-head credibility__intro">
+      <p class="eyebrow" data-reveal="eyebrow">Why LENZ</p>
+      <h2 data-reveal="heading">Two Decades Behind the Camera</h2>
+      <p data-reveal="body">
+        LENZ pairs more than twenty years of professional photography experience with an FAA
+        Part 107 license and insurance — a rare combination that lets one studio handle the
+        ground and the air on the same shoot.
+      </p>
+    </div>
+
+    <ul class="credibility__list">
+      {
+        points.map((point) => (
+          <li>
+            <span aria-hidden="true">—</span>
+            {point}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .credibility__inner {
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  .credibility__intro {
+    margin-bottom: 0;
+  }
+
+  .credibility__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    border-top: 1px solid var(--color-hairline-on-cream);
+    padding-top: var(--space-sm);
+  }
+
+  .credibility__list li {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75em;
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    font-weight: 500;
+  }
+
+  .credibility__list li span {
+    color: var(--color-gold);
+    font-family: var(--font-body);
+  }
+
+  @media (min-width: 62.5em) {
+    .credibility__inner {
+      grid-template-columns: minmax(20rem, 0.85fr) 1fr;
+      align-items: start;
+    }
+
+    .credibility__list {
+      border-top: none;
+      border-left: 1px solid var(--color-hairline-on-cream);
+      padding-top: 0;
+      padding-left: var(--space-lg);
+    }
+  }
+</style>

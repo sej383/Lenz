@@ -1,0 +1,93 @@
+---
+// Single-image, full-bleed hero — same proven structure as the other
+// service pages. The crane/modular-home lift crop-tested cleanly at
+// default center across desktop, ultrawide, and mobile, so no responsive
+// object-position override was needed here (unlike Real Estate's hero).
+import { Image } from "astro:assets";
+import craneLiftPhoto from "../../assets/photos/hero-aerial-construction-lift.jpg";
+---
+
+<section class="aerial-hero texture-charcoal">
+  <Image
+    src={craneLiftPhoto}
+    alt="A modular home being lifted into place by a large crane in a rural field"
+    widths={[700, 1100, 1500, 1900, 2400]}
+    width={2400}
+    sizes="100vw"
+    loading="eager"
+    class="aerial-hero__image"
+  />
+
+  <div class="aerial-hero__scrim" aria-hidden="true"></div>
+
+  <div class="container aerial-hero__content">
+    <p class="eyebrow">Services · Aerial</p>
+    <h1>Aerial Perspective for Projects That Need the Bigger Picture</h1>
+    <p class="aerial-hero__copy">
+      Drone photography and video for construction, land, commercial properties, agriculture,
+      and specialty projects — FAA Part 107 licensed &amp; insured.
+    </p>
+    <a class="btn btn-primary" href="/contact/">Start a Project</a>
+  </div>
+</section>
+
+<style>
+  .aerial-hero {
+    position: relative;
+    min-height: clamp(26rem, 80vh, 42rem);
+    display: flex;
+    align-items: flex-end;
+    background: var(--surface-dark);
+    overflow: hidden;
+  }
+
+  .aerial-hero :global(.aerial-hero__image) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
+
+  .aerial-hero__scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(to top, rgba(15, 13, 11, 0.92) 0%, rgba(15, 13, 11, 0.55) 40%, rgba(15, 13, 11, 0.1) 75%);
+  }
+
+  .aerial-hero__content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding-block: var(--space-xl) var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-xs);
+    color: var(--color-offwhite);
+  }
+
+  .aerial-hero__content h1 {
+    font-size: var(--step-4);
+    font-weight: 500;
+    max-width: 24ch;
+    margin-top: 0.2em;
+  }
+
+  .aerial-hero__copy {
+    max-width: 34rem;
+    color: var(--color-muted-on-dark);
+  }
+
+  .aerial-hero__content .btn {
+    margin-top: var(--space-xs);
+  }
+
+  @media (min-width: 62.5em) {
+    .aerial-hero {
+      min-height: clamp(30rem, 90vh, 46rem);
+    }
+  }
+</style>

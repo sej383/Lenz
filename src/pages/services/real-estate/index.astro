@@ -1,0 +1,37 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import Header from "../../../components/Header.astro";
+import Footer from "../../../components/Footer.astro";
+import { siteConfig } from "../../../lib/site-config";
+import RealEstateHero from "../../../components/real-estate/RealEstateHero.astro";
+import RealEstateIntro from "../../../components/real-estate/RealEstateIntro.astro";
+import ListingMedia from "../../../components/real-estate/ListingMedia.astro";
+import BookBanner from "../../../components/real-estate/BookBanner.astro";
+import Capabilities from "../../../components/real-estate/Capabilities.astro";
+import RealEstateWork from "../../../components/real-estate/RealEstateWork.astro";
+import ServiceCta from "../../../components/ServiceCta.astro";
+---
+
+<BaseLayout
+  title="Real Estate Media — LENZ"
+  description="Real estate listing media for agents, brokerages, builders, and property professionals across western Iowa, the Omaha/Council Bluffs metro, and eastern Nebraska — photography, aerial, video, floor plans, tours, and more, booked directly online."
+>
+  <Header />
+  <main id="main-content">
+    <RealEstateHero />
+    <RealEstateIntro />
+    <ListingMedia />
+    <BookBanner />
+    <Capabilities />
+    <RealEstateWork />
+    <ServiceCta
+      eyebrow="Book Now"
+      heading="Ready to Schedule Your Listing?"
+      copy="Real estate photography, aerial, and media packages are ordered directly through our booking system — pick a time and we'll take it from there."
+      ctaLabel="Book Real Estate"
+      ctaHref={siteConfig.bookRealEstateUrl}
+      external
+    />
+  </main>
+  <Footer />
+</BaseLayout>

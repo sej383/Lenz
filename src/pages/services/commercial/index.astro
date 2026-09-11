@@ -1,0 +1,28 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import Header from "../../../components/Header.astro";
+import Footer from "../../../components/Footer.astro";
+import CommercialHero from "../../../components/commercial/CommercialHero.astro";
+import PositioningIntro from "../../../components/commercial/PositioningIntro.astro";
+import Capabilities from "../../../components/commercial/Capabilities.astro";
+import CommercialWork from "../../../components/commercial/CommercialWork.astro";
+import ServiceCta from "../../../components/ServiceCta.astro";
+---
+
+<BaseLayout
+  title="Commercial Photography & Aerial Imagery — LENZ"
+  description="Commercial photography and FAA Part 107 aerial coverage for properties, businesses, construction, and large-scale sites across western Iowa, the Omaha/Council Bluffs metro, and eastern Nebraska."
+>
+  <Header />
+  <main id="main-content">
+    <CommercialHero />
+    <PositioningIntro />
+    <Capabilities />
+    <CommercialWork />
+    <ServiceCta
+      heading="Have a Commercial Project in Mind?"
+      copy="Tell us about the property, business, or project — we'll follow up to plan the shoot, aerial coverage included where it fits."
+    />
+  </main>
+  <Footer />
+</BaseLayout>

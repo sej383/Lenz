@@ -1,0 +1,28 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import Header from "../../../components/Header.astro";
+import Footer from "../../../components/Footer.astro";
+import BrandingHero from "../../../components/branding/BrandingHero.astro";
+import BrandingIntro from "../../../components/branding/BrandingIntro.astro";
+import Capabilities from "../../../components/branding/Capabilities.astro";
+import BrandingWork from "../../../components/branding/BrandingWork.astro";
+import ServiceCta from "../../../components/ServiceCta.astro";
+---
+
+<BaseLayout
+  title="Branding Photography — LENZ"
+  description="Product, people, and brand photography for businesses, service providers, and brands across western Iowa, the Omaha/Council Bluffs metro, and eastern Nebraska — built for websites, advertising, and ongoing marketing use."
+>
+  <Header />
+  <main id="main-content">
+    <BrandingHero />
+    <BrandingIntro />
+    <Capabilities />
+    <BrandingWork />
+    <ServiceCta
+      heading="Have a Branding Project in Mind?"
+      copy="Tell us about your business, products, or team — we'll follow up to plan imagery you can put to work across your website, ads, and marketing."
+    />
+  </main>
+  <Footer />
+</BaseLayout>
