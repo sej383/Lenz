@@ -1,5 +1,6 @@
 ---
 import { siteConfig } from "../lib/site-config";
+import BrandWordmark from "./BrandWordmark.astro";
 
 const points = [
   "20+ years of photography experience",
@@ -12,7 +13,9 @@ const points = [
 <section class="section section--light section--sand credibility">
   <div class="container credibility__inner">
     <div class="section-head credibility__intro">
-      <p class="eyebrow" data-reveal="eyebrow">Why LENZ</p>
+      <p class="eyebrow credibility__eyebrow" data-reveal="eyebrow">
+        Why <BrandWordmark />
+      </p>
       <h2 data-reveal="heading">Two Decades Behind the Camera</h2>
       <p data-reveal="body">
         LENZ pairs more than twenty years of professional photography experience with an FAA
@@ -42,6 +45,17 @@ const points = [
 
   .credibility__intro {
     margin-bottom: 0;
+  }
+
+  /* BrandWordmark's default sizing (0.82em / translateY(0.06em)) is tuned
+     for display headings — here the eyebrow's smaller, uppercase, letter-
+     spaced Inter text has a different cap-height ratio, so the default
+     rendered slightly larger/lower than "WHY". Scoped down to just this
+     eyebrow rather than changing the shared component's defaults used
+     elsewhere (Services, AboutIntro, AboutHero). */
+  .credibility__eyebrow :global(.brand-wordmark img) {
+    height: 0.75em;
+    transform: translateY(0.02em);
   }
 
   .credibility__list {

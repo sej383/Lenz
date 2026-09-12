@@ -44,6 +44,14 @@ repo has no access to, not code.
       both Cloudflare origins (no violations), and — via the browser's own Performance API on the
       live site — both the script load and the actual `cloudflareinsights.com/cdn-cgi/rum` beacon
       request completed successfully. Don't re-flag unless the token needs to change.
+- [x] **CSP font-src violation — COMPLETE.** A Manrope Variable font subset (Cyrillic Extended,
+      unused on this all-English site) was small enough to trip Vite's default asset-inlining
+      threshold and got embedded as a `data:font` URI, which `font-src 'self'` correctly blocked.
+      Fixed at the root with `vite.build.assetsInlineLimit: 0` in `astro.config.mjs` — every font
+      asset is now always served as a real same-origin file, no CSP weakening needed. Verified live:
+      zero console errors (fresh tab, hard reload), Manrope/Inter both confirmed loaded and
+      rendering correctly, desktop and mobile. Don't revisit unless a future build introduces a new
+      font-loading error.
 
 ---
 
