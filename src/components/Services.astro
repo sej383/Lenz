@@ -150,13 +150,17 @@ const services = [
 
   .service-tile__body .eyebrow {
     color: var(--color-gold-soft);
-    text-shadow: 0 1px 4px rgba(6, 4, 3, 0.7);
+    text-shadow:
+      0 1px 3px rgba(6, 4, 3, 0.85),
+      0 0 6px rgba(6, 4, 3, 0.55);
   }
 
   .service-tile__body h3 {
     font-size: var(--step-2);
     font-weight: 500;
-    text-shadow: 0 1px 8px rgba(6, 4, 3, 0.65);
+    text-shadow:
+      0 1px 4px rgba(6, 4, 3, 0.8),
+      0 0 10px rgba(6, 4, 3, 0.55);
   }
 
   .service-tile__body h3 a {
@@ -169,6 +173,7 @@ const services = [
   }
 
   .service-tile__body p {
+    width: fit-content;
     max-width: 26rem;
     color: var(--color-offwhite);
     font-size: var(--step--1);
