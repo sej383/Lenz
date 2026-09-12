@@ -74,6 +74,8 @@ const services = [
                 sizes="(min-width: 62.5em) 45vw, 100vw"
               />
             </a>
+            <div class="service-tile__blur" aria-hidden="true"></div>
+            <div class="service-tile__scrim" aria-hidden="true"></div>
             <div class="service-tile__body">
               <span class="eyebrow">{service.label}</span>
               <h3>
@@ -132,6 +134,60 @@ const services = [
     transform: scale(1.035);
   }
 
+  /* Full-tile scrim, not just a band behind the copy block — a hard-edged
+     box directly under the text was the previous approach (a flat gradient
+     confined to .service-tile__body's own bounded height), which left a
+     visible seam where the box began and no darkening at all in the photo
+     just above it. This sits between the photo and the content instead:
+     an ellipse anchored at the bottom-left corner, sized well past the
+     tile's own bounds so it reads as the photo itself falling into shadow
+     rather than a caption plate. Strongest immediately behind the text,
+     fading smoothly outward with no hard edge in any direction. Warm
+     brown-black (matches --color-dark-4/5 from the leather system) rather
+     than neutral black, consistent with the rest of the site's dark tone.
+     pointer-events: none so it never blocks the decorative media link or
+     the hover-triggered image scale beneath it. */
+  /* Softens the photo's own detail directly behind the text (masked to the
+     same footprint as the scrim below) rather than relying on darkening
+     opacity alone. Needed for busy/high-contrast source photos — printed
+     text on the Branding coffee sack, roofline detail on Aerial — where
+     even strong darkening still let a pattern show through; a touch of
+     blur removes the competing detail instead of just dimming it, which
+     also reads more like a natural falloff of focus/shadow than a filter
+     slapped on top. Masked (not just faded via its own opacity) so the
+     blur radius itself doesn't visually smear past the darkened area. */
+  .service-tile__blur {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    mask-image: radial-gradient(140% 120% at 0% 100%, black 0%, black 42%, transparent 78%);
+    -webkit-mask-image: radial-gradient(140% 120% at 0% 100%, black 0%, black 42%, transparent 78%);
+  }
+
+  .service-tile__scrim {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    /* Two layers: the radial ellipse carries the real weight directly
+       behind the text (paired with the blur above, so it no longer needs
+       to be pushed to near-opaque to do the job on its own). A second,
+       much gentler full-width wash underneath takes the edge off bright
+       spots outside the ellipse's reach (e.g. Real Estate's sunlit
+       sidewalk/landscaping) without darkening the top of any tile, where
+       the photo should stay bright. */
+    background: radial-gradient(
+        150% 130% at 0% 100%,
+        rgba(10, 7, 4, 0.96) 0%,
+        rgba(10, 7, 4, 0.9) 32%,
+        rgba(10, 7, 4, 0.68) 52%,
+        rgba(10, 7, 4, 0.32) 70%,
+        rgba(10, 7, 4, 0) 88%
+      ),
+      linear-gradient(to top, rgba(10, 7, 4, 0.3) 0%, rgba(10, 7, 4, 0) 50%);
+  }
+
   .service-tile__body {
     position: relative;
     margin-top: auto;
@@ -141,16 +197,17 @@ const services = [
     align-items: flex-start;
     gap: 0.5em;
     color: var(--color-offwhite);
-    background: linear-gradient(to top, rgba(15, 13, 11, 0.88) 20%, rgba(15, 13, 11, 0));
   }
 
   .service-tile__body .eyebrow {
     color: var(--color-gold-soft);
+    text-shadow: 0 1px 4px rgba(6, 4, 3, 0.7);
   }
 
   .service-tile__body h3 {
     font-size: var(--step-2);
     font-weight: 500;
+    text-shadow: 0 1px 6px rgba(6, 4, 3, 0.55);
   }
 
   .service-tile__body h3 a {
@@ -164,8 +221,10 @@ const services = [
 
   .service-tile__body p {
     max-width: 26rem;
-    color: var(--color-muted-on-dark);
+    color: var(--color-offwhite);
+    opacity: 0.9;
     font-size: var(--step--1);
+    text-shadow: 0 1px 4px rgba(6, 4, 3, 0.75);
   }
 
   .service-tile__cta {
