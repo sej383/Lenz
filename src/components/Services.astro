@@ -132,15 +132,11 @@ const services = [
     transform: scale(1.035);
   }
 
-  /* Text legibility comes entirely from .service-tile__body itself now —
-     the photo stays untouched everywhere else. A gradient confined to the
-     box's own height would leave a hard seam where it begins (the original
-     flaw); the box-shadow below extends that same warm dark tone a further
-     20-30px past the box's top edge, fading smoothly to nothing, so the
-     seam disappears without darkening any more of the photo. Sides/bottom
-     already sit flush with the tile's own edge (clipped by its
-     overflow: hidden), so the extra reach only ever shows going up into
-     the image, never sideways or below. */
+  /* No card-wide treatment at all — the photo is untouched everywhere.
+     The eyebrow and heading sit directly on the image with just a text
+     shadow for contrast; the paragraph alone gets its own small, opaque
+     background (below), sized to its own text rather than the card, like
+     a caption plate rather than an overlay. */
   .service-tile__body {
     position: relative;
     margin-top: auto;
@@ -150,10 +146,6 @@ const services = [
     align-items: flex-start;
     gap: 0.5em;
     color: var(--color-offwhite);
-    background: linear-gradient(to top, rgba(15, 13, 11, 0.85) 20%, rgba(15, 13, 11, 0) 100%);
-    box-shadow:
-      0 0 10px 2px rgba(15, 13, 11, 0.32),
-      0 0 24px 8px rgba(15, 13, 11, 0.16);
   }
 
   .service-tile__body .eyebrow {
@@ -179,9 +171,10 @@ const services = [
   .service-tile__body p {
     max-width: 26rem;
     color: var(--color-offwhite);
-    opacity: 0.92;
     font-size: var(--step--1);
-    text-shadow: 0 1px 5px rgba(6, 4, 3, 0.85);
+    background: rgba(15, 13, 11, 0.6);
+    padding: 9px 12px;
+    border-radius: 3px;
   }
 
   .service-tile__cta {
