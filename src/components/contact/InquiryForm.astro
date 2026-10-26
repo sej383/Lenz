@@ -15,8 +15,11 @@
 ---
 
 <div class="inquiry-form-wrap">
-  <h2>Commercial, Branding, Aerial &amp; General Inquiries</h2>
-  <p class="inquiry-form__lead">Tell us about your project and we'll follow up to plan next steps.</p>
+  <h2>Tell Us What You Need</h2>
+  <p class="inquiry-form__lead">
+    Tell us about your project, business, or challenge — we'll follow up to figure out the right
+    next step.
+  </p>
 
   <p class="inquiry-form__required-note">Fields marked <span aria-hidden="true">*</span> are required.</p>
 
@@ -60,12 +63,72 @@
           Aerial
         </label>
         <label class="radio-option">
+          <input type="radio" name="projectType" value="Marketing and Business Solutions" required />
+          Marketing &amp; Business Solutions
+        </label>
+        <label class="radio-option">
           <input type="radio" name="projectType" value="General Inquiry" required />
           General Inquiry
         </label>
       </div>
       <span class="form-error" id="projectType-error" role="alert"></span>
     </fieldset>
+
+    <div id="marketing-interests" hidden>
+      <fieldset class="form-field">
+        <legend>What Are You Looking For?</legend>
+        <p class="inquiry-form__field-note">Select anything that applies — optional.</p>
+        <div class="checkbox-group">
+          <label class="checkbox-option">
+            <input type="checkbox" name="marketingInterests" value="Marketing Consultation" />
+            Marketing Consultation
+          </label>
+          <label class="checkbox-option">
+            <input type="checkbox" name="marketingInterests" value="Google Business Profile Optimization" />
+            Google Business Profile Optimization
+          </label>
+          <label class="checkbox-option">
+            <input type="checkbox" name="marketingInterests" value="Local and AI Search Visibility" />
+            Local &amp; AI Search Visibility
+          </label>
+          <label class="checkbox-option">
+            <input type="checkbox" name="marketingInterests" value="Google and Meta Advertising" />
+            Google &amp; Meta Advertising
+          </label>
+          <label class="checkbox-option">
+            <input type="checkbox" name="marketingInterests" value="Website Design or Updates" />
+            Website Design or Updates
+          </label>
+          <label class="checkbox-option">
+            <input type="checkbox" name="marketingInterests" value="Photo, Drone and Video Content" />
+            Photo, Drone &amp; Video Content
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset class="form-field">
+        <legend>How Would You Like to Work Together?</legend>
+        <p class="inquiry-form__field-note">Optional — pick whatever fits best right now.</p>
+        <div class="radio-group">
+          <label class="radio-option">
+            <input type="radio" name="engagementType" value="One-Time Consultation, Assessment, or Cleanup" />
+            One-Time Help
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="engagementType" value="Individual Project" />
+            Individual Project
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="engagementType" value="Ongoing Monthly Support" />
+            Ongoing Monthly Support
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="engagementType" value="Not Sure Yet" />
+            Not Sure Yet — Let's Talk
+          </label>
+        </div>
+      </fieldset>
+    </div>
 
     <div class="form-field">
       <label for="location">Project Location / City</label>
@@ -102,6 +165,19 @@
   const successPanel = document.getElementById("inquiry-success");
 
   if (form && successPanel) {
+    const marketingInterests = document.getElementById("marketing-interests");
+    const projectTypeInputs = form.querySelectorAll<HTMLInputElement>('input[name="projectType"]');
+
+    const syncMarketingInterests = () => {
+      if (!marketingInterests) return;
+      const checked = form.querySelector<HTMLInputElement>('input[name="projectType"]:checked');
+      marketingInterests.hidden = checked?.value !== "Marketing and Business Solutions";
+    };
+
+    projectTypeInputs.forEach((input) => {
+      input.addEventListener("change", syncMarketingInterests);
+    });
+
     const requiredFields = [
       { el: form.querySelector<HTMLInputElement>("#name"), message: "Please enter your name." },
       { el: form.querySelector<HTMLInputElement>("#email"), message: "Please enter a valid email address." },
@@ -236,6 +312,16 @@
     display: none;
   }
 
+  #marketing-interests {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  #marketing-interests[hidden] {
+    display: none;
+  }
+
   .form-field {
     display: flex;
     flex-direction: column;
@@ -243,6 +329,38 @@
     border: 0;
     padding: 0;
     margin: 0;
+  }
+
+  .form-field[hidden] {
+    display: none;
+  }
+
+  .inquiry-form__field-note {
+    font-size: var(--step--1);
+    color: var(--color-muted);
+  }
+
+  .checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6em;
+    margin-top: 0.3em;
+  }
+
+  .checkbox-option {
+    display: flex;
+    align-items: center;
+    gap: 0.6em;
+    font-family: var(--font-body);
+    font-size: var(--step-0);
+    font-weight: 400;
+    color: var(--color-charcoal);
+  }
+
+  .checkbox-option input {
+    width: 1.15em;
+    height: 1.15em;
+    accent-color: var(--color-gold);
   }
 
   .form-field > label,
@@ -376,6 +494,12 @@
       flex-direction: row;
       flex-wrap: wrap;
       gap: 1.25em;
+    }
+
+    .checkbox-group {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 0.8em 1.25em;
     }
   }
 </style>

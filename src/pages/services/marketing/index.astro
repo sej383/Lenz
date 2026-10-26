@@ -1,0 +1,54 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import Header from "../../../components/Header.astro";
+import Footer from "../../../components/Footer.astro";
+import MarketingHero from "../../../components/marketing/MarketingHero.astro";
+import MarketingIntro from "../../../components/marketing/MarketingIntro.astro";
+import WaysToWork from "../../../components/marketing/WaysToWork.astro";
+import MarketingPriorities from "../../../components/marketing/MarketingPriorities.astro";
+import ContentForVisibility from "../../../components/marketing/ContentForVisibility.astro";
+import ServiceCta from "../../../components/ServiceCta.astro";
+import { siteConfig } from "../../../lib/site-config";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  serviceType: "Midwest Small Business Marketing & Business Solutions",
+  name: `${siteConfig.marketingServiceLabel} — LENZ`,
+  description:
+    "Marketing consultation, business visibility strategy, Google Business Profile optimization, AI search visibility, digital advertising, website design, and commercial visual media — available one-time, project-based, or as an ongoing monthly partnership.",
+  provider: {
+    "@type": "ProfessionalService",
+    name: siteConfig.name,
+    telephone: siteConfig.contact.phone ?? undefined,
+    email: siteConfig.contact.email ?? undefined,
+  },
+  areaServed: siteConfig.marketingArea,
+};
+---
+
+<BaseLayout
+  title={`${siteConfig.marketingServiceLabel} for Midwest Businesses — LENZ`}
+  description="Small business marketing partner for companies across the Midwest — marketing consultation, Google Business Profile optimization, local and AI search visibility, digital advertising, and website design, plus commercial visual media for regional projects. One-time, project-based, or ongoing monthly support."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <Header />
+  <main id="main-content">
+    <MarketingHero />
+    <MarketingIntro />
+    <WaysToWork />
+    <MarketingPriorities />
+    <ContentForVisibility />
+    <ServiceCta
+      heading="Your Business. Your Call."
+      copy="Tell us what you're working on — a one-time project, ongoing support, or you're not even sure yet. We'll help you figure out the right next step."
+      ctaLabel="Let's Talk About Your Business"
+    >
+      <Fragment slot="note">
+        Prefer to just send a few details first? Visit the <a href="/contact/">contact page</a> and
+        let us know what kind of help you're looking for.
+      </Fragment>
+    </ServiceCta>
+  </main>
+  <Footer />
+</BaseLayout>

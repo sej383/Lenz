@@ -1,0 +1,132 @@
+---
+// Bridges the new consulting-side service back to LENZ's core photography
+// work — two alternating rows, same proven pattern as the Capabilities
+// components on the other service pages, reusing existing photography
+// (no new shoot exists specifically for this page) with internal links out
+// to the full Branding/Commercial/Aerial pages those images belong to.
+import { Image } from "astro:assets";
+import productPhoto from "../../assets/photos/svc-branding-coffee.jpg";
+import aerialPhoto from "../../assets/photos/hero-aerial.jpg";
+---
+
+<section class="section section--light section--sand content-for-visibility">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Content Built to Work</p>
+      <h2>Visibility Needs Something to Show</h2>
+    </div>
+
+    <div class="content-for-visibility__rows">
+      <article class="capability-row">
+        <div class="capability-row__media">
+          <Image
+            src={productPhoto}
+            alt="Close-up product photography of a burlap coffee sack"
+            widths={[500, 800, 1100]}
+            width={1100}
+            sizes="(min-width: 55em) 50vw, 100vw"
+          />
+        </div>
+        <div class="capability-row__body">
+          <span class="eyebrow">Photo &amp; Video for Marketing</span>
+          <p>
+            Every marketing plan needs real content behind it. We shoot and fly the{" "}
+            <a href="/services/branding/">photography</a> and video that fuels your website, ads,
+            social media, and Google Business Profile — created with where it's going to be used
+            already in mind, not handed over as a random batch of files.
+          </p>
+        </div>
+      </article>
+
+      <article class="capability-row capability-row--reverse">
+        <div class="capability-row__media">
+          <Image
+            src={aerialPhoto}
+            alt="Straight-down aerial view of a large home with a backyard pool"
+            widths={[500, 800, 1100]}
+            width={1100}
+            sizes="(min-width: 55em) 50vw, 100vw"
+          />
+        </div>
+        <div class="capability-row__body">
+          <span class="eyebrow">Aerial &amp; On-Location Coverage</span>
+          <p>
+            A storefront, a job site, a property, or a team at work — covered from the ground and
+            the air with LENZ's <a href="/services/aerial/">FAA Part 107 licensed aerial</a> and{" "}
+            <a href="/services/commercial/">commercial</a> photography, so your business looks as
+            strong in search results and ads as it does in person. Available for suitable regional
+            projects, with travel arranged as appropriate.
+          </p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  .content-for-visibility__rows {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .capability-row {
+    display: grid;
+    gap: var(--space-sm);
+    align-items: start;
+  }
+
+  .capability-row__media {
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    border: 1px solid rgba(224, 176, 104, 0.16);
+  }
+
+  .capability-row__media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .capability-row__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    max-width: 30rem;
+    padding-top: 0.35em;
+  }
+
+  .capability-row__body .eyebrow {
+    color: var(--color-bronze);
+  }
+
+  .capability-row__body p {
+    color: var(--color-charcoal);
+  }
+
+  .capability-row__body a {
+    color: var(--color-bronze);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+  }
+
+  @media (min-width: 55em) {
+    .capability-row {
+      grid-template-columns: 1.3fr 1fr;
+    }
+
+    .capability-row--reverse {
+      grid-template-columns: 1fr 1.3fr;
+    }
+
+    .capability-row--reverse .capability-row__media {
+      order: 2;
+    }
+
+    .capability-row--reverse .capability-row__body {
+      order: 1;
+      justify-self: end;
+    }
+  }
+</style>

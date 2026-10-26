@@ -11,7 +11,7 @@ import ServiceCta from "../../../components/ServiceCta.astro";
 
 <BaseLayout
   title="Branding Photography — LENZ"
-  description="Product, people, and brand photography for businesses, service providers, and brands across western Iowa, the Omaha/Council Bluffs metro, and eastern Nebraska — built for websites, advertising, and ongoing marketing use."
+  description="Product, people, and brand photography for businesses, service providers, and brands across western Iowa, the Omaha/Council Bluffs metro, and eastern Nebraska, with travel available across the Midwest — built for websites, advertising, and ongoing marketing use."
 >
   <Header />
   <main id="main-content">
@@ -22,7 +22,12 @@ import ServiceCta from "../../../components/ServiceCta.astro";
     <ServiceCta
       heading="Have a Branding Project in Mind?"
       copy="Tell us about your business, products, or team — we'll follow up to plan imagery you can put to work across your website, ads, and marketing."
-    />
+    >
+      <Fragment slot="note">
+        Want help putting this imagery to work — strategy, advertising, a website refresh? See{" "}
+        <a href="/services/marketing/">Marketing &amp; Business Solutions</a>.
+      </Fragment>
+    </ServiceCta>
   </main>
   <Footer />
 </BaseLayout>

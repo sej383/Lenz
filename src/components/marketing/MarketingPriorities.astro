@@ -1,0 +1,106 @@
+---
+// A card grid rather than the alternating image/text rows used on the
+// photography service pages (Commercial/Branding/Aerial/Real Estate
+// Capabilities) — these six areas are consulting and strategy work, not
+// individually photographed services, so a grid of plainly-stated cards
+// fits the content better than forcing six rows onto borrowed photography.
+//
+// The first five are remote-deliverable, so they're framed as available
+// Midwest-wide; the last — physical photo/drone/video content — is
+// deliberately scoped as regional with travel, not implied to be available
+// everywhere the way the consulting side is.
+import { siteConfig } from "../../lib/site-config";
+
+const priorities = [
+  {
+    label: "Marketing Consultation & Strategy",
+    copy: `A clear, practical plan for where your time and marketing budget are best spent — built around your business and delivered remotely to companies throughout ${siteConfig.marketingArea}.`,
+  },
+  {
+    label: "Google Business Profile Optimization",
+    copy: "Your Google Business Profile is often the first thing a potential customer sees. We set it up correctly and keep it working in your favor.",
+  },
+  {
+    label: "Google Maps & Local Search Visibility",
+    copy: "Showing up on Google Maps and in local search when someone nearby searches for what you do — the foundation of small business marketing, handled so you don't have to think about it.",
+  },
+  {
+    label: "AI Search Readiness",
+    copy: "More customers get found by AI now — ChatGPT, Google AI Overviews, and similar tools. We help position your business for AI search visibility, not just traditional search.",
+  },
+  {
+    label: "Google & Meta Advertising",
+    copy: "Targeted digital advertising on Google and Meta, built around a budget and goals that make sense for a small or growing business.",
+  },
+  {
+    label: "Website Design, Improvements & Management",
+    copy: "A new site, meaningful updates, or ongoing management — handled directly or coordinated with the right web specialist, so your site keeps pace with the rest of your marketing.",
+  },
+  {
+    label: "Photo, Drone & Video Content",
+    copy: "Professional photography, aerial coverage, and video created specifically to power your marketing. Available for suitable regional projects, with travel arranged as appropriate.",
+  },
+];
+---
+
+<section class="section section--dark surface-leather-tall marketing-priorities">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">What We Cover</p>
+      <h2>How We Help You Get Found</h2>
+      <p>
+        Photo and video content for marketing is built alongside the strategy work below — see{" "}
+        <a href="/services/branding/">Branding</a> and <a href="/services/aerial/">Aerial</a> for the
+        full visual media side of LENZ.
+      </p>
+    </div>
+
+    <div class="marketing-priorities__grid">
+      {
+        priorities.map((item) => (
+          <article class="priority-card">
+            <span class="eyebrow">{item.label}</span>
+            <p>{item.copy}</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .marketing-priorities__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1px;
+    background: var(--color-hairline);
+  }
+
+  .priority-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6em;
+    padding: var(--space-sm);
+    background: var(--color-dark-4);
+  }
+
+  .priority-card .eyebrow {
+    color: var(--color-gold-soft);
+  }
+
+  .priority-card p {
+    color: var(--color-muted-on-dark);
+  }
+
+  @media (min-width: 40em) {
+    .marketing-priorities__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 62.5em) {
+    .marketing-priorities__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

@@ -11,20 +11,29 @@ import commercialPhoto from "../../assets/photos/svc-commercial-gretna.jpg";
 import brandingPhoto from "../../assets/photos/svc-branding-coffee.jpg";
 import aerialPhoto from "../../assets/photos/hero-aerial.jpg";
 import realEstatePhoto from "../../assets/photos/svc-realestate-elkhorn.jpg";
+import marketingPhoto from "../../assets/photos/work-commercial-chiro.jpg";
 import { siteConfig } from "../../lib/site-config";
 
+// Marketing leads and spans the full row — "prominent, not buried" — with
+// Commercial, Branding, and Aerial grouped under one "Commercial Visual
+// Media" kicker (their own pages are still live and linked individually)
+// and Real Estate kept under its own "Real Estate Media" kicker since it
+// has a separate booking flow.
 const services = [
   {
-    key: "real-estate",
-    label: "Real Estate",
-    href: "/services/real-estate/",
-    description: "Listing photography ordered and delivered through a fast, professional booking system.",
-    image: realEstatePhoto,
-    alt: "Stone and metal-roofed home exterior on a sunny day",
-    secondaryCta: { label: "Book Real Estate", href: siteConfig.bookRealEstateUrl, external: true },
+    key: "marketing",
+    group: siteConfig.marketingServiceLabel,
+    label: siteConfig.marketingServiceLabel,
+    href: "/services/marketing/",
+    description:
+      "One point of contact for marketing consultation, Google Business Profile optimization, AI search visibility, digital advertising, and website work — one-time, project-based, or ongoing.",
+    image: marketingPhoto,
+    alt: "A chiropractor treating a patient in a clinic exam room",
+    featured: true,
   },
   {
     key: "commercial",
+    group: "Commercial Visual Media",
     label: "Commercial",
     href: "/services/commercial/",
     description:
@@ -34,6 +43,7 @@ const services = [
   },
   {
     key: "branding",
+    group: "Commercial Visual Media",
     label: "Branding",
     href: "/services/branding/",
     description: "Product photography, headshots, and brand imagery built for your website, deck, or ad campaign.",
@@ -42,11 +52,22 @@ const services = [
   },
   {
     key: "aerial",
+    group: "Commercial Visual Media",
     label: "Aerial",
     href: "/services/aerial/",
     description: "FAA Part 107 licensed drone coverage for real estate, construction progress, land, and events.",
     image: aerialPhoto,
     alt: "Straight-down aerial view of a large home with a backyard pool",
+  },
+  {
+    key: "real-estate",
+    group: "Real Estate Media",
+    label: "Real Estate",
+    href: "/services/real-estate/",
+    description: "Listing photography ordered and delivered through a fast, professional booking system.",
+    image: realEstatePhoto,
+    alt: "Stone and metal-roofed home exterior on a sunny day",
+    secondaryCta: { label: "Book Real Estate", href: siteConfig.bookRealEstateUrl, external: true },
   },
 ];
 ---
@@ -54,7 +75,7 @@ const services = [
 <div class="services-overview__grid">
   {
     services.map((service) => (
-      <article class="services-overview__card">
+      <article class:list={["services-overview__card", { "services-overview__card--featured": service.featured }]}>
         <a class="services-overview__media" href={service.href}>
           <Image
             src={service.image}
@@ -65,6 +86,7 @@ const services = [
           />
         </a>
         <div class="services-overview__body">
+          <p class="eyebrow services-overview__kicker">{service.group}</p>
           <h2>
             <a href={service.href}>{service.label}</a>
           </h2>
@@ -132,6 +154,10 @@ const services = [
     gap: 0.5em;
   }
 
+  .services-overview__kicker {
+    margin-bottom: -0.1em;
+  }
+
   .services-overview__body h2 {
     font-size: var(--step-2);
     font-weight: 500;
@@ -176,6 +202,23 @@ const services = [
     .services-overview__grid {
       grid-template-columns: repeat(2, 1fr);
       gap: var(--space-lg) var(--space-md);
+    }
+
+    .services-overview__card--featured {
+      grid-column: 1 / -1;
+      flex-direction: row;
+      gap: var(--space-md);
+    }
+
+    .services-overview__card--featured .services-overview__media {
+      flex: 1;
+      aspect-ratio: auto;
+    }
+
+    .services-overview__card--featured .services-overview__body {
+      flex: 1;
+      margin-top: 0;
+      justify-content: center;
     }
   }
 </style>

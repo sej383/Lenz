@@ -4,10 +4,11 @@ import wordmark from "../assets/logo/lenz-wordmark-on-dark.png";
 import { primaryNav, siteConfig } from "../lib/site-config";
 
 const serviceLinks = [
+  { label: siteConfig.marketingServiceLabel, href: "/services/marketing/" },
   { label: "Commercial", href: "/services/commercial/" },
   { label: "Branding", href: "/services/branding/" },
-  { label: "Real Estate", href: "/services/real-estate/" },
   { label: "Aerial", href: "/services/aerial/" },
+  { label: "Real Estate", href: "/services/real-estate/" },
 ];
 
 const year = new Date().getFullYear();
@@ -18,7 +19,8 @@ const telHref = siteConfig.contact.phone ? `tel:${siteConfig.contact.phone.repla
   <div class="container site-footer__grid">
     <div class="site-footer__brand">
       <Image src={wordmark} alt="LENZ" width={220} />
-      <p>{siteConfig.tagline}</p>
+      <p class="site-footer__category">{siteConfig.brandCategory}</p>
+      <p class="site-footer__motto">{siteConfig.tagline}</p>
     </div>
 
     <nav class="site-footer__col" aria-label="Footer">
@@ -69,7 +71,7 @@ const telHref = siteConfig.contact.phone ? `tel:${siteConfig.contact.phone.repla
   </div>
 
   <div class="container site-footer__bottom">
-    <p>{siteConfig.baseLocation} · Serving {siteConfig.serviceArea}</p>
+    <p>{siteConfig.homeStatement}</p>
     <p>FAA Part 107 Certified Remote Pilot</p>
     <p>&copy; {year} LENZ. All photography and content rights reserved.</p>
   </div>
@@ -99,12 +101,21 @@ const telHref = siteConfig.contact.phone ? `tel:${siteConfig.contact.phone.repla
     height: auto;
   }
 
-  .site-footer__brand p {
+  .site-footer__category {
     margin-top: var(--space-2xs);
     font-size: var(--step--1);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.04em;
     color: var(--color-gold-soft);
+    max-width: 16rem;
+  }
+
+  .site-footer__motto {
+    margin-top: 0.3em;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-muted-on-dark);
     max-width: 14rem;
   }
 

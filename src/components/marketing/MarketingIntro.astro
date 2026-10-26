@@ -1,0 +1,49 @@
+---
+// Same light-section positioning pattern used on every other service page
+// (Commercial's PositioningIntro, Branding/Aerial's statement sections).
+// Unlike those photography pages, this statement deliberately leads with
+// the Midwest rather than the home metro — marketing consultation and
+// visibility work are remote-deliverable, not travel-bound like a shoot.
+import { siteConfig } from "../../lib/site-config";
+---
+
+<section class="section section--light marketing-intro">
+  <div class="container">
+    <p class="eyebrow">Who We Work With</p>
+    <p class="marketing-intro__statement">
+      LENZ partners with small and medium-sized businesses throughout {siteConfig.marketingArea} to
+      simplify marketing, strengthen online visibility, and connect with more customers.
+    </p>
+    <p class="marketing-intro__sub">
+      Whether you need help figuring out where to start, improving your presence on Google,
+      navigating AI-powered search, running digital advertising, or creating professional marketing
+      content, LENZ brings the pieces together.
+    </p>
+    <p class="marketing-intro__sub">
+      Practical solutions, personalized guidance, and one trusted partner who understands the bigger
+      picture.
+    </p>
+  </div>
+</section>
+
+<style>
+  .marketing-intro__statement {
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    font-weight: 500;
+    line-height: 1.35;
+    max-width: 46rem;
+    margin-top: 0.5em;
+    color: var(--color-charcoal);
+  }
+
+  .marketing-intro__sub {
+    margin-top: var(--space-xs);
+    max-width: 38rem;
+    color: var(--color-muted);
+  }
+
+  .marketing-intro__sub + .marketing-intro__sub {
+    margin-top: var(--space-2xs);
+  }
+</style>

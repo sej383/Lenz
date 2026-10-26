@@ -1,143 +1,239 @@
 ---
+// Restructured around three pillars rather than five equal tiles — Marketing
+// & Business Solutions leads as a full-width featured block (not another
+// tile in the grid) so it reads as LENZ's primary identity, not a fifth
+// service tacked onto a photography lineup. Commercial, Branding, and
+// Aerial are presented together under one "Commercial Visual Media" card
+// (their dedicated pages are still live and linked — see /services/ for the
+// full breakdown); Real Estate keeps its own card since it has its own
+// booking flow.
 import { Image } from "astro:assets";
-import commercialPhoto from "../assets/photos/svc-commercial-gretna.jpg";
-import brandingPhoto from "../assets/photos/svc-branding-coffee.jpg";
-import aerialPhoto from "../assets/photos/hero-aerial.jpg";
+import marketingPhoto from "../assets/photos/work-commercial-chiro.jpg";
+import visualMediaPhoto from "../assets/photos/svc-commercial-gretna.jpg";
 import realEstatePhoto from "../assets/photos/svc-realestate-elkhorn.jpg";
 import { siteConfig } from "../lib/site-config";
-import BrandWordmark from "./BrandWordmark.astro";
 
-const services = [
-  {
-    key: "commercial",
-    label: "Commercial",
-    href: "/services/commercial/",
-    description:
-      "Leasing offices, retail centers, industrial sites, and multifamily communities — photographed and flown to show a property at its most leasable.",
-    image: commercialPhoto,
-    alt: "Aerial view of the Gretna Rural Fire Department building",
-    cta: { label: "Start a Project", href: "/contact/", external: false },
-  },
-  {
-    key: "branding",
-    label: "Branding",
-    href: "/services/branding/",
-    description:
-      "Product photography, headshots, and brand imagery built for your website, deck, or ad campaign.",
-    image: brandingPhoto,
-    alt: "Close-up product photography of a burlap coffee sack",
-    cta: { label: "Start a Project", href: "/contact/", external: false },
-  },
-  {
-    key: "aerial",
-    label: "Aerial",
-    href: "/services/aerial/",
-    description:
-      "FAA Part 107 licensed drone coverage for real estate, construction progress, land, and events.",
-    image: aerialPhoto,
-    alt: "Straight-down aerial view of a large home with a backyard pool",
-    cta: { label: "Start a Project", href: "/contact/", external: false },
-  },
-  {
-    key: "real-estate",
-    label: "Real Estate",
-    href: "/services/real-estate/",
-    description: "Listing photography ordered and delivered through a fast, professional booking system.",
-    image: realEstatePhoto,
-    alt: "Stone and metal-roofed home exterior on a sunny day",
-    cta: { label: "Book Real Estate", href: siteConfig.bookRealEstateUrl, external: true },
-  },
+const marketingPoints = [
+  "Marketing consultation & strategy",
+  "Google Business Profile optimization",
+  "Google Maps & local search visibility",
+  "AI search visibility",
+  "Digital advertising",
+  "Website design, improvements & management",
+  "Ongoing monthly marketing support",
 ];
+
+const visualMedia = {
+  href: "/services/",
+  label: "Commercial Visual Media",
+  description:
+    "Branding, commercial, and drone photography and video — built for websites, advertising, and campaigns.",
+  points: ["Branding & commercial photography", "Commercial video & drone media", "B-roll, promo & campaign content"],
+  links: [
+    { label: "Branding", href: "/services/branding/" },
+    { label: "Commercial", href: "/services/commercial/" },
+    { label: "Aerial", href: "/services/aerial/" },
+  ],
+};
+
+const realEstate = {
+  href: "/services/real-estate/",
+  label: "Real Estate Media",
+  description: "Listing photography, aerial media, reels, and floor plans — ordered and delivered fast.",
+  points: ["Real estate photography & aerial media", "Property videos & reels", "Floor plans & listing media"],
+  cta: { label: "Book Real Estate", href: siteConfig.bookRealEstateUrl, external: true },
+};
 ---
 
 <section class="section section--light services" id="services">
   <div class="container">
     <div class="section-head">
       <p class="eyebrow" data-reveal="eyebrow">What LENZ Does</p>
-      <h2 data-reveal="heading">Four Ways to Put <BrandWordmark /> to Work</h2>
+      <h2 data-reveal="heading">One Partner, However Much Help You Need</h2>
       <p data-reveal="body">
-        Every project gets the same editorial eye, whether it's a single listing or a multi-site
-        commercial portfolio.
+        From marketing strategy to the visual media that powers it, LENZ is one partner for as
+        much — or as little — help as your business needs.
       </p>
     </div>
 
+    <article class="marketing-feature">
+      <div class="marketing-feature__media">
+        <Image
+          src={marketingPhoto}
+          alt="A chiropractor treating a patient in a clinic exam room"
+          widths={[500, 800, 1100, 1400]}
+          width={1400}
+          sizes="(min-width: 62.5em) 42vw, 100vw"
+        />
+      </div>
+      <div class="marketing-feature__body">
+        <span class="eyebrow">{siteConfig.marketingServiceLabel}</span>
+        <h3>One Contact for Your Whole Marketing Picture</h3>
+        <p>
+          Strategy, visibility, advertising, and the website work to back it up — handled directly
+          or coordinated with the right specialist, one-time, project-based, or ongoing.
+        </p>
+        <ul class="marketing-feature__points">
+          {marketingPoints.map((point) => <li>{point}</li>)}
+        </ul>
+        <a class="btn btn-primary" href="/services/marketing/">Explore Marketing Solutions</a>
+      </div>
+    </article>
+
     <div class="services__grid">
-      {
-        services.map((service) => (
-          <article class:list={["service-tile", `service-tile--${service.key}`]}>
-            <a class="service-tile__media" href={service.href} aria-hidden="true" tabindex="-1">
-              <Image
-                src={service.image}
-                alt=""
-                widths={[400, 700, 1000, 1300]}
-                width={1300}
-                sizes="(min-width: 62.5em) 45vw, 100vw"
-              />
-            </a>
-            <div class="service-tile__body">
-              <span class="eyebrow">{service.label}</span>
-              <h3>
-                <a href={service.href}>{service.label}</a>
-              </h3>
-              <p>{service.description}</p>
-              {service.cta.external ? (
-                <a class="btn btn-secondary service-tile__cta" href={service.cta.href} target="_blank" rel="noopener noreferrer">
-                  {service.cta.label}
-                  <span class="visually-hidden">(opens the online booking site in a new tab)</span>
-                </a>
-              ) : (
-                <a class="btn btn-secondary service-tile__cta" href={service.cta.href}>
-                  {service.cta.label}
-                </a>
-              )}
-            </div>
-          </article>
-        ))
-      }
+      <article class="service-card">
+        <a class="service-card__media" href={visualMedia.href} aria-hidden="true" tabindex="-1">
+          <Image
+            src={visualMediaPhoto}
+            alt="Aerial view of the Gretna Rural Fire Department building"
+            widths={[400, 700, 1000, 1300]}
+            width={1300}
+            sizes="(min-width: 62.5em) 45vw, 100vw"
+          />
+        </a>
+        <div class="service-card__body">
+          <span class="eyebrow">Visual Media</span>
+          <h3>
+            <a href={visualMedia.href}>{visualMedia.label}</a>
+          </h3>
+          <p>{visualMedia.description}</p>
+          <ul class="service-card__points">
+            {visualMedia.points.map((point) => <li>{point}</li>)}
+          </ul>
+          <div class="service-card__links">
+            {visualMedia.links.map((link) => <a href={link.href}>{link.label}</a>)}
+          </div>
+        </div>
+      </article>
+
+      <article class="service-card">
+        <a class="service-card__media" href={realEstate.href} aria-hidden="true" tabindex="-1">
+          <Image
+            src={realEstatePhoto}
+            alt="Stone and metal-roofed home exterior on a sunny day"
+            widths={[400, 700, 1000, 1300]}
+            width={1300}
+            sizes="(min-width: 62.5em) 45vw, 100vw"
+          />
+        </a>
+        <div class="service-card__body">
+          <span class="eyebrow">Real Estate</span>
+          <h3>
+            <a href={realEstate.href}>{realEstate.label}</a>
+          </h3>
+          <p>{realEstate.description}</p>
+          <ul class="service-card__points">
+            {realEstate.points.map((point) => <li>{point}</li>)}
+          </ul>
+          <a class="btn btn-secondary service-card__cta" href={realEstate.cta.href} target="_blank" rel="noopener noreferrer">
+            {realEstate.cta.label}
+            <span class="visually-hidden">(opens the online booking site in a new tab)</span>
+          </a>
+        </div>
+      </article>
     </div>
   </div>
 </section>
 
 <style>
+  .marketing-feature {
+    display: grid;
+    gap: var(--space-sm);
+    background: var(--color-charcoal);
+    border: 1px solid rgba(224, 176, 104, 0.16);
+    box-shadow: 0 16px 32px -20px rgba(21, 17, 13, 0.5);
+    margin-bottom: var(--space-sm);
+  }
+
+  .marketing-feature__media {
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+  }
+
+  .marketing-feature__media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .marketing-feature__body {
+    padding: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6em;
+    color: var(--color-offwhite);
+  }
+
+  .marketing-feature__body h3 {
+    font-size: var(--step-2);
+    font-weight: 500;
+  }
+
+  .marketing-feature__body > p {
+    color: var(--color-muted-on-dark);
+    max-width: 34rem;
+  }
+
+  .marketing-feature__points {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5em;
+    margin: 0.3em 0 0.2em;
+    max-width: 40rem;
+  }
+
+  .marketing-feature__points li {
+    position: relative;
+    padding-left: 1.2em;
+    font-size: var(--step--1);
+    color: var(--color-offwhite);
+  }
+
+  .marketing-feature__points li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 0.5em;
+    height: 1px;
+    background: var(--color-gold);
+  }
+
   .services__grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--space-sm);
   }
 
-  .service-tile {
+  .service-card {
     position: relative;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     background: var(--color-charcoal);
-    min-height: 22rem;
+    min-height: 26rem;
     border: 1px solid rgba(224, 176, 104, 0.16);
     box-shadow: 0 16px 32px -20px rgba(21, 17, 13, 0.5);
   }
 
-  .service-tile__media {
+  .service-card__media {
     position: absolute;
     inset: 0;
   }
 
-  .service-tile__media :global(img) {
+  .service-card__media :global(img) {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 900ms var(--ease-editorial);
   }
 
-  .service-tile:hover .service-tile__media :global(img) {
+  .service-card:hover .service-card__media :global(img) {
     transform: scale(1.035);
   }
 
-  /* No card-wide treatment at all — the photo is untouched everywhere.
-     The eyebrow and heading sit directly on the image with just a text
-     shadow for contrast; the paragraph alone gets its own small, opaque
-     background (below), sized to its own text rather than the card, like
-     a caption plate rather than an overlay. */
-  .service-tile__body {
+  .service-card__body {
     position: relative;
     margin-top: auto;
     padding: var(--space-sm);
@@ -148,14 +244,14 @@ const services = [
     color: var(--color-offwhite);
   }
 
-  .service-tile__body .eyebrow {
+  .service-card__body .eyebrow {
     color: var(--color-gold-soft);
     text-shadow:
       0 1px 3px rgba(6, 4, 3, 0.85),
       0 0 6px rgba(6, 4, 3, 0.55);
   }
 
-  .service-tile__body h3 {
+  .service-card__body h3 {
     font-size: var(--step-2);
     font-weight: 500;
     text-shadow:
@@ -163,16 +259,16 @@ const services = [
       0 0 10px rgba(6, 4, 3, 0.55);
   }
 
-  .service-tile__body h3 a {
+  .service-card__body h3 a {
     color: inherit;
   }
 
-  .service-tile__body h3 a:hover,
-  .service-tile__body h3 a:focus-visible {
+  .service-card__body h3 a:hover,
+  .service-card__body h3 a:focus-visible {
     color: var(--color-gold-soft);
   }
 
-  .service-tile__body p {
+  .service-card__body > p {
     width: fit-content;
     max-width: 26rem;
     color: var(--color-offwhite);
@@ -182,7 +278,41 @@ const services = [
     border-radius: 3px;
   }
 
-  .service-tile__cta {
+  .service-card__points {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3em;
+    background: rgba(15, 13, 11, 0.6);
+    padding: 9px 12px;
+    border-radius: 3px;
+  }
+
+  .service-card__points li {
+    font-size: var(--step--2, 0.75rem);
+    color: var(--color-muted-on-dark);
+  }
+
+  .service-card__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4em 0.9em;
+    margin-top: 0.2em;
+  }
+
+  .service-card__links a {
+    font-size: var(--step--1);
+    font-weight: 600;
+    color: var(--color-offwhite);
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+  }
+
+  .service-card__links a:hover,
+  .service-card__links a:focus-visible {
+    color: var(--color-gold-soft);
+  }
+
+  .service-card__cta {
     margin-top: 0.4em;
     border-color: var(--color-offwhite);
     color: var(--color-offwhite);
@@ -190,33 +320,30 @@ const services = [
     font-size: 0.72rem;
   }
 
-  .service-tile__cta:hover,
-  .service-tile__cta:focus-visible {
+  .service-card__cta:hover,
+  .service-card__cta:focus-visible {
     background: var(--color-offwhite);
     color: var(--color-charcoal);
   }
 
+  @media (min-width: 55em) {
+    .marketing-feature {
+      grid-template-columns: 1.1fr 1fr;
+      align-items: stretch;
+    }
+
+    .marketing-feature__media {
+      aspect-ratio: auto;
+    }
+
+    .marketing-feature__points {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
   @media (min-width: 62.5em) {
     .services__grid {
-      grid-template-columns: repeat(12, 1fr);
-      grid-auto-rows: 24rem;
-      gap: 2px;
-    }
-
-    .service-tile--commercial {
-      grid-column: span 7;
-    }
-
-    .service-tile--branding {
-      grid-column: span 5;
-    }
-
-    .service-tile--aerial {
-      grid-column: span 7;
-    }
-
-    .service-tile--real-estate {
-      grid-column: span 5;
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 </style>

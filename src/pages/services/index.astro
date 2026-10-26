@@ -7,7 +7,7 @@ import ServicesOverview from "../../components/services/ServicesOverview.astro";
 
 <BaseLayout
   title="Services — LENZ"
-  description="Real estate, commercial, branding, and aerial photography services from LENZ, serving western Iowa, the Omaha/Council Bluffs metro, and eastern Nebraska."
+  description="Real estate, commercial, branding, and aerial photography, plus marketing and business solutions from LENZ — proudly based in Iowa, partnering with businesses across the Midwest."
 >
   <Header />
   <main id="main-content">
@@ -16,8 +16,10 @@ import ServicesOverview from "../../components/services/ServicesOverview.astro";
         <p class="eyebrow">Services</p>
         <h1 class="services-intro__heading">What We Do</h1>
         <p class="services-intro__copy">
-          Four areas of focus, one consistent standard of work. Explore a service below to see the
-          full approach, or start a project if you already know what you need.
+          Five areas of focus, one consistent standard of work — from photography and aerial media
+          to <a href="/services/marketing/">marketing and business solutions</a> for companies
+          across the Midwest. Explore a service below to see the full approach, or start a project
+          if you already know what you need.
         </p>
       </div>
     </section>
@@ -56,6 +58,13 @@ import ServicesOverview from "../../components/services/ServicesOverview.astro";
     font-size: var(--step-0);
     color: var(--color-muted);
     max-width: 40rem;
+  }
+
+  .services-intro__copy a {
+    color: var(--color-bronze);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
   }
 
   .services-grid-section {

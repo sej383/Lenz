@@ -1,0 +1,96 @@
+---
+// Same single-image, full-bleed hero structure as the other service pages
+// (Branding, Commercial) — Marketing gets the same visual weight as the
+// photography services rather than reading as a secondary add-on page.
+import { Image } from "astro:assets";
+import chiroPhoto from "../../assets/photos/work-commercial-chiro.jpg";
+import { siteConfig } from "../../lib/site-config";
+---
+
+<section class="marketing-hero texture-charcoal">
+  <Image
+    src={chiroPhoto}
+    alt="A chiropractor treating a patient in a clinic exam room"
+    widths={[700, 1100, 1500, 1900, 2400]}
+    width={2400}
+    sizes="100vw"
+    loading="eager"
+    class="marketing-hero__image"
+  />
+
+  <div class="marketing-hero__scrim" aria-hidden="true"></div>
+
+  <div class="container marketing-hero__content">
+    <p class="eyebrow">Services · {siteConfig.marketingServiceLabel}</p>
+    <h1>Your Business. Your Goals. One Partner for It All.</h1>
+    <p class="marketing-hero__copy">
+      LENZ is a single point of contact for marketing and business visibility — consultation,
+      Google Business Profile optimization, AI search visibility, digital advertising, website
+      design, and the commercial visual media to back it all up — for small and medium-sized
+      businesses across {siteConfig.marketingArea}.
+    </p>
+    <a class="btn btn-primary" href="/contact/">Let's Talk About Your Business</a>
+  </div>
+</section>
+
+<style>
+  .marketing-hero {
+    position: relative;
+    min-height: clamp(26rem, 80vh, 42rem);
+    display: flex;
+    align-items: flex-end;
+    background: var(--surface-dark);
+    overflow: hidden;
+  }
+
+  .marketing-hero :global(.marketing-hero__image) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 25%;
+    z-index: 0;
+  }
+
+  .marketing-hero__scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(to top, rgba(15, 13, 11, 0.92) 0%, rgba(15, 13, 11, 0.6) 42%, rgba(15, 13, 11, 0.15) 78%);
+  }
+
+  .marketing-hero__content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding-block: var(--space-xl) var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-xs);
+    color: var(--color-offwhite);
+  }
+
+  .marketing-hero__content h1 {
+    font-size: var(--step-4);
+    font-weight: 500;
+    max-width: 22ch;
+    margin-top: 0.2em;
+  }
+
+  .marketing-hero__copy {
+    max-width: 34rem;
+    color: var(--color-muted-on-dark);
+  }
+
+  .marketing-hero__content .btn {
+    margin-top: var(--space-xs);
+  }
+
+  @media (min-width: 62.5em) {
+    .marketing-hero {
+      min-height: clamp(30rem, 90vh, 46rem);
+    }
+  }
+</style>

@@ -5,6 +5,7 @@ import commercialPhoto from "../assets/photos/hero-commercial-dominant.jpg";
 import realEstatePhoto from "../assets/photos/hero-real-estate.jpg";
 import brandingPhoto from "../assets/photos/hero-branding.jpg";
 import aerialPhoto from "../assets/photos/hero-aerial.jpg";
+import { siteConfig } from "../lib/site-config";
 
 // Width/sizes reasoning: the hero visual composition is capped at a max
 // content width (see .hero__shell max-width below), so beyond that width
@@ -49,17 +50,23 @@ const supporting = [
 <section class="hero surface-leather surface-drift">
   <div class="hero__shell">
     <div class="hero__message">
-      <h1 class="hero__wordmark">
+      <div class="hero__brandmark">
         <Image src={wordmark} alt="LENZ" width={480} loading="eager" />
-      </h1>
-      <p class="hero__tagline" data-reveal="eyebrow">Visual Storytelling from Every Angle</p>
-      <p class="hero__copy" data-reveal="heading">
-        Commercial, branding, real estate and aerial photography created to make businesses,
-        properties and places stand out.
+        <span class="hero__motto">{siteConfig.tagline}</span>
+      </div>
+      <p class="eyebrow" data-reveal="eyebrow">{siteConfig.brandCategory}</p>
+      <h1 class="hero__headline" data-reveal="heading">Your Business. Your Goals. One Partner for It All.</h1>
+      <p class="hero__copy">
+        Marketing solutions, digital visibility, website services, and commercial visual media —
+        all working together to help your business stand out and grow.
+      </p>
+      <p class="hero__copy">
+        From one-time marketing help to complete ongoing support, LENZ brings the strategy,
+        creativity, and resources together so you can focus on running your business.
       </p>
       <div class="hero__ctas" data-reveal="body">
-        <a class="btn btn-primary" href="/work/">Explore the Work</a>
-        <a class="btn btn-secondary btn-on-dark" href="/contact/">Start a Project</a>
+        <a class="btn btn-primary" href="/contact/">Let's Talk About Your Business</a>
+        <a class="btn btn-secondary btn-on-dark" href="/services/">Explore Our Solutions</a>
       </div>
     </div>
 
@@ -126,30 +133,37 @@ const supporting = [
     padding: var(--space-md) var(--container-padding);
   }
 
-  .hero__wordmark {
-    margin: 0;
-    line-height: 0;
+  .hero__brandmark {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4em;
   }
 
-  .hero__wordmark :global(img) {
-    width: clamp(11rem, 8.5rem + 11vw, 18rem);
+  .hero__brandmark :global(img) {
+    width: clamp(9rem, 7rem + 9vw, 14rem);
     height: auto;
   }
 
-  .hero__tagline {
+  .hero__motto {
     font-family: var(--font-body);
     font-weight: 600;
-    font-size: clamp(0.95rem, 0.86rem + 0.4vw, 1.2rem);
-    letter-spacing: 0.16em;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--color-gold-soft);
-    max-width: 26rem;
+    color: var(--color-muted-on-dark);
+  }
+
+  .hero__headline {
+    font-size: var(--step-4);
+    font-weight: 500;
+    margin-top: 0.2em;
+    color: var(--color-offwhite);
   }
 
   .hero__copy {
     font-size: var(--step-0);
     color: var(--color-muted-on-dark);
-    max-width: 28rem;
+    max-width: 30rem;
   }
 
   .hero__ctas {

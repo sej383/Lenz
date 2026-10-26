@@ -15,8 +15,9 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
   name: siteConfig.name,
+  slogan: siteConfig.tagline,
   description:
-    "Photography and FAA Part 107 aerial media studio offering real estate, commercial, branding, and drone photography.",
+    "Marketing solutions and commercial visual media partner for small and medium-sized businesses across the Midwest — marketing consultation, Google Business Profile optimization, AI search visibility, digital advertising, and website design, plus branding, commercial, real estate, and aerial photography and video.",
   image: new URL("/og-image.jpg", Astro.site).toString(),
   url: Astro.site?.toString(),
   telephone: siteConfig.contact.phone ?? undefined,
@@ -27,14 +28,14 @@ const jsonLd = {
     addressRegion: "IA",
     addressCountry: "US",
   },
-  areaServed: siteConfig.serviceArea,
+  areaServed: `${siteConfig.marketingArea}, with on-location photography and aerial coverage across ${siteConfig.serviceArea}`,
   sameAs: [siteConfig.contact.facebookUrl].filter(Boolean),
 };
 ---
 
 <BaseLayout
-  title="LENZ — Visual Storytelling from Every Angle"
-  description="LENZ is a Woodbine, Iowa–based photography and aerial media studio serving western Iowa, the Omaha/Council Bluffs metro, and eastern Nebraska with real estate, commercial, branding, and drone photography."
+  title="LENZ — Marketing Solutions & Commercial Visual Media"
+  description="LENZ is an Iowa-based small business marketing partner for companies across the Midwest — marketing consultation, Google Business Profile optimization, local and AI search visibility, digital advertising, and website design, plus commercial visual media: branding, commercial, real estate, and aerial photography and video. Visual storytelling from every angle."
 >
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   <Header />

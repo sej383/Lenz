@@ -6,7 +6,7 @@
 // here in the meantime.
 import type { ImageMetadata } from "astro";
 import { Image } from "astro:assets";
-import BrandWordmark from "../BrandWordmark.astro";
+import { siteConfig } from "../../lib/site-config";
 
 interface Props {
   portrait?: ImageMetadata;
@@ -28,11 +28,12 @@ const { portrait, portraitAlt = "Portrait of Sarah Lenz, LENZ founder and photog
 
     <div class="about-hero__body">
       <p class="eyebrow">About LENZ</p>
-      <h1>The Eye Behind <BrandWordmark background="dark" /></h1>
+      <h1>Your Marketing &amp; Visual Media Partner</h1>
       <p class="about-hero__lead">
-        Sarah Lenz has spent more than twenty years behind a camera, and she personally owns and
-        runs every part of LENZ. This isn't a large, anonymous media company — it's one
-        photographer, hands-on from the first phone call to final delivery.
+        Sarah Lenz built LENZ on more than twenty years of photography experience, then grew it
+        into a hands-on {siteConfig.marketingServiceLabel.toLowerCase()} partner for small and
+        medium-sized businesses across the Midwest. This isn't a large, anonymous agency — it's
+        one person, personally involved from the first conversation to final delivery.
       </p>
     </div>
   </div>

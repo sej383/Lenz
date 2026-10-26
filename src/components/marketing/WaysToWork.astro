@@ -1,0 +1,92 @@
+---
+// Carries two jobs at once: explains LENZ's "one point of contact, not an
+// in-house department for everything" coordinator model (so the site never
+// implies every specialty — e.g. a website rebuild — is performed by LENZ
+// itself), and lays out the three flexible ways to engage. A light/sand
+// section between the Intro (also light) and the dark Priorities grid, same
+// seam approach ContentForVisibility uses further down the page.
+const tiers = [
+  {
+    label: "One-Time Help",
+    copy: "A single consultation, assessment, or cleanup project — perfect when you just need a clear read on where things stand and what to fix first.",
+  },
+  {
+    label: "Individual Projects",
+    copy: "A specific marketing initiative — a campaign, a Google Business Profile overhaul, a content shoot — scoped and completed on its own timeline.",
+  },
+  {
+    label: "Ongoing Partnership",
+    copy: "A custom monthly retainer for businesses that want steady, ongoing marketing support without hiring an in-house team.",
+  },
+];
+---
+
+<section class="section section--light section--sand ways-to-work">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">How We Work Together</p>
+      <h2>One Contact. One Team. Solutions Built Around Your Business.</h2>
+      <p>
+        Marketing touches a lot of moving parts — your website, your content, your advertising, your
+        local search presence, and more. You don't need to track down a handful of different
+        vendors to make it work. Bring LENZ the challenge, and we'll either handle it directly or
+        bring in the right specialist and manage it through completion — you get one consistent
+        point of contact, not a maze of subcontractors to coordinate yourself.
+      </p>
+    </div>
+
+    <div class="ways-to-work__grid">
+      {
+        tiers.map((tier) => (
+          <article class="ways-to-work__card">
+            <span class="eyebrow">{tier.label}</span>
+            <p>{tier.copy}</p>
+          </article>
+        ))
+      }
+    </div>
+
+    <p class="ways-to-work__note">
+      Not sure which fits? That's a perfectly good place to start too.
+    </p>
+  </div>
+</section>
+
+<style>
+  .ways-to-work__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);
+  }
+
+  .ways-to-work__card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6em;
+    padding: var(--space-sm);
+    background: var(--color-cream);
+    border: 1px solid var(--color-hairline-on-cream);
+  }
+
+  .ways-to-work__card .eyebrow {
+    color: var(--color-bronze);
+  }
+
+  .ways-to-work__card p {
+    color: var(--color-charcoal);
+  }
+
+  .ways-to-work__note {
+    margin-top: var(--space-md);
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    font-weight: 500;
+    color: var(--color-charcoal);
+  }
+
+  @media (min-width: 55em) {
+    .ways-to-work__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

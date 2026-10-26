@@ -11,7 +11,7 @@ import ServiceCta from "../../../components/ServiceCta.astro";
 
 <BaseLayout
   title="Commercial Photography & Aerial Imagery — LENZ"
-  description="Commercial photography and FAA Part 107 aerial coverage for properties, businesses, construction, and large-scale sites across western Iowa, the Omaha/Council Bluffs metro, and eastern Nebraska."
+  description="Commercial photography and FAA Part 107 aerial coverage for properties, businesses, construction, and large-scale sites across western Iowa, the Omaha/Council Bluffs metro, and eastern Nebraska, with travel available across the Midwest."
 >
   <Header />
   <main id="main-content">
@@ -22,7 +22,12 @@ import ServiceCta from "../../../components/ServiceCta.astro";
     <ServiceCta
       heading="Have a Commercial Project in Mind?"
       copy="Tell us about the property, business, or project — we'll follow up to plan the shoot, aerial coverage included where it fits."
-    />
+    >
+      <Fragment slot="note">
+        Need this content to do more than look good — ads, Google visibility, a bigger campaign?
+        See <a href="/services/marketing/">Marketing &amp; Business Solutions</a>.
+      </Fragment>
+    </ServiceCta>
   </main>
   <Footer />
 </BaseLayout>
